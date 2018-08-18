@@ -1,0 +1,23 @@
+{
+  "name": "team8",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'no test' && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2018-SanJose-Opportunity-Hack/Team8.git"
+  },
+  "author": "srivassumit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/2018-SanJose-Opportunity-Hack/Team8/issues"
+  },
+  "homepage": "https://github.com/2018-SanJose-Opportunity-Hack/Team8#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
