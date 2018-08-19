@@ -112,3 +112,23 @@ server.post('/login', function (req, res) {
   }
 });
 
+/* Complete registration for a user by storing all collected data */
+server.post('/completeRegistration', function (req, res) {
+
+});
+
+/* Store a user's interests for future use */
+server.post('/myinterests', function (req, res) {
+
+});
+
+/* Get suggested events for a user */
+server.post('/mysuggestions', function (req, res) {
+
+});
+
+/* Basic site search will return events or community centers */
+server.get('/search', function (req, res) {
+
+});
+
