@@ -39,7 +39,7 @@ server.get('/community-events', function (req, res) {
   var count = 0;
   if(communityName) {
     var communityCenterEvents = events.filter( function(event) {
-      return event.EventCommName === communityName && ++count < 10;
+      return event.EventCommName === communityName && ++count < 10; //TODO
     });
     if(communityCenterEvents) {
       res.status(200).send(communityCenterEvents);
@@ -127,7 +127,19 @@ server.post('/mysuggestions', function (req, res) {
 
 /* Basic site search will return events or community centers */
 server.get('/search', function (req, res) {
-
+    console.log('GET /search called');
+    var communityName= unescape(req.query.communityName);
+    var searchTerm = escape(req.query.term);
+    console.log('searchterm '+ searchTerm + ' community Name: '+ communityName);
+    var count = 0;
+    var searchMatchingEvents = events.filter( function(event) {
+      return event.EventCommName == communityName && event.EventName.toLowerCase().includes(searchTerm.toLowerCase()) && ++count < 10;
+    });
+    if(searchMatchingEvents) {
+      res.status(200).send(searchMatchingEvents);
+    } else {
+      res.status(200).send({'error': 'Sorry, couldn\'t find any results.'});
+    }    
 });
 
 /* Register for an event */
