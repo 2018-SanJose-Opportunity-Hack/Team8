@@ -4,14 +4,20 @@
         "CommCenterName": "Alma Community Center",
         "CommCenterAddress": "136 W. Alma Ave.",
         "CommCenterZip": "95110",
-        "CommCenterLL": ""
+        "CommCenterLL": {
+            "lat": 37.31433,
+            "lng": -121.8759268
+        }
     },
     {
         "CommCenterID": "1",
         "CommCenterName": "Berryessa Community Center",
         "CommCenterAddress": "3050 Berryessa Rd.",
         "CommCenterZip": "95132",
-        "CommCenterLL": ""
+        "CommCenterLL": {
+            "lat": 37.3918919,
+            "lng": -121.849387
+        }
     },
     {
         "CommCenterID": "2",

@@ -4,10 +4,21 @@ app.controller('index', ['$scope', '$http', '$window', function ($scope, $http, 
 
     $scope.title = 'City of San Jose: Parks';
 
+    $scope.user = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        password: '',
+        confirmPassword: ''
+    };
+
     $scope.communities = [];
     $http.get('data/communities.json').then(function (data) {
         // console.log('DATA: ' + JSON.stringify(data));
         $scope.communities = data.data;
+        $scope.selectedCommunity = $scope.communities[0].CommCenterName
+        $scope.communitySelected($scope.selectedCommunity);
     }, function (err) {
         console.log("Error getting data from the communities JSON file.");
     });
@@ -33,7 +44,7 @@ app.controller('index', ['$scope', '$http', '$window', function ($scope, $http, 
     if (Number.prototype.toRadians === undefined) {
         Number.prototype.toRadians = function () { return this * Math.PI / 180; };
     }
-
+    /* Ref Calculating distance between pair of (latitude,longitude): https://www.movable-type.co.uk/scripts/latlong.html */
     calculatedistance = function (lat1, lat2, lon1, lon2) {
         var φ1 = lat1.toRadians(), φ2 = lat2.toRadians(), Δλ = (lon2 - lon1).toRadians(), R = 6371e3; // gives d in metres
         var d = Math.acos(Math.sin(φ1) * Math.sin(φ2) + Math.cos(φ1) * Math.cos(φ2) * Math.cos(Δλ)) * R;

@@ -25,8 +25,8 @@
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container">
             <!-- Company name shown on mobile -->
-            <a class="navbar-brand" href="#">City of
-                <span>San Jose</span>
+            <a class="navbar-brand" href="/">
+                <img ng-src="/img/img9.jpeg" width="300px" height="100px" alt="San Jose Parks, Recreation and Neighborhood services">
             </a>
             <!-- Mobile menu toggle -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar"
@@ -63,13 +63,14 @@
     </md-content>
 
     <md-button class="md-raised md-primary" ng-click="getLocation()">Get Location</md-button>
-    <label>Location is: </label><span>{{position}}</span>
+    <label hidden="true">Location is: </label>
+    <span>{{position}}</span>
 
     <md-content class="md-padding" layout-xs="column" layout="row">
         <md-input-container>
             <label>Communities</label>
             <md-select ng-model="selectedCommunity" ng-change="communitySelected(selectedCommunity)">
-                <md-option ng-repeat="comm in communities" ng-value="comm.CommCenterName">
+                <md-option ng-repeat="comm in communities" ng-selected="comm==communities[0] ? true : false" ng-value="comm.CommCenterName">
                     {{comm.CommCenterName}}
                 </md-option>
             </md-select>
