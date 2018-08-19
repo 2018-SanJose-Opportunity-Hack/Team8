@@ -6592,8 +6592,7 @@ Header + Navbar
   margin: 0.5rem; }
 
 .navbar {
-  padding: 1rem 1rem;
-  background: linear-gradient(#fff, #ebebeb); }
+  padding: 1rem 1rem; }
 
 #mainNavbar .navbar-nav {
   width: 100%;
@@ -6878,11 +6877,11 @@ html {
   font-size: 16px; }
 
 html {
-  font-size: 10px; }
+  font-size: 14px; }
 
 @media (min-width: 768px) {
   html {
-    font-size: 12px; }
+    font-size: 14px; }
 
   .card {
     margin-bottom: 0; }

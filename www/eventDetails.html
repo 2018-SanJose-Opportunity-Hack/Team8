@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/eventDetails.css" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript" src="js/app.js"></script>
 </head>
@@ -26,8 +27,8 @@
             <div class="container">
     
                 <!-- Company name shown on mobile -->
-                <a class="navbar-brand" href="#">Company
-                    <span>Name</span>
+                <a class="navbar-brand" href="/">
+                        <img ng-src="/img/img9.jpeg" width="300px" height="100px" alt="San Jose Parks, Recreation and Neighborhood services">
                 </a>
     
                 <!-- Mobile menu toggle -->
@@ -60,15 +61,22 @@
         </nav>
 
 
-        <md-card>
-            <img ng-src="/img/img1.jpeg" class="md-card-image" alt="Washed Out">
+        <md-card class="eventCardContainer">
+            <img ng-src="/img/img3.jpeg" class="md-card-image eventCardPic" alt="Washed Out">
             <md-card-title>
               <md-card-title-text>
-                <span class="md-headline">Action buttons</span>
+                    <span class="md-headline">Placeholder Event Name </span>
               </md-card-title-text>
             </md-card-title>
+            <md-card-actions layout="row">
+                    <md-button>Register</md-button>
+                  </md-card-actions>
             <md-card-content>
               <p>
+                    <span class="eventDetailsItem">Event Category</span>
+                    <span class="eventDetailsItem">Event Date</span>
+                    <span class="eventDetailsItem">Event Price</span>
+                <br/>
                 The titles of Washed Out's breakthrough song and the first single from Paracosm share the
                 two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
                 The titles of Washed Out's breakthrough song and the first single from Paracosm share the
@@ -93,9 +101,7 @@
 
               </p>
             </md-card-content>
-            <md-card-actions layout="row" layout-align="end center">
-              <md-button>Register</md-button>
-            </md-card-actions>
+            
         </md-card>
 
 
