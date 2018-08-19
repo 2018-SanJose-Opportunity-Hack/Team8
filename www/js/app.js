@@ -16,6 +16,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
     $scope.signupLastName = undefined;
     $scope.signupEmail = undefined;
     $scope.signupPassword = undefined;
+    $scope.recToggle = false;
 
 
     $scope.fetchSession = function () {
@@ -24,6 +25,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         $scope.communityEvents = localStorageService.get('communityEvents');
         $scope.selectedEvent = localStorageService.get('selectedEvent');
         $scope.selectedCommunity = localStorageService.get('selectedCommunity');
+        $scope.recToggle = false;
 
         var invalidAuthPage = $window.location.href.includes('/login.html') || $window.location.href.includes('/signup.html');
         if (invalidAuthPage) {
@@ -172,7 +174,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
                 showToast("Signup SuccessFul! You can login now!");
                 $mdDialog.hide();
                 $timeout(function () {
-                    $window.location.href = '/index.html';
+                    $window.location.href = '/categories.html';
                 }, 1000);
             }
         }, function (err) {
@@ -190,6 +192,10 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
 
     $scope.communitySelected = function (selectedCommunity) {
         console.log('Comunity selected: ' + selectedCommunity);
+        $scope.recToggle = false;
+        $scope.selectedCommunity = selectedCommunity;
+        localStorageService.set('selectedCommunity', null);
+        localStorageService.set('selectedCommunity', selectedCommunity);
         loadCommunityEvents(selectedCommunity);
     };
 
@@ -223,7 +229,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
     // Categories
     //$scope.items = [{"category":"sports", "img":"./img/img3.jpeg"}, {"category":"dance", "img":"./img/img3.jpeg"}, {"category":"arts", "img":"./img/img3.jpeg"}];
     $scope.items = []
-    $http.get('data/categories.json').then(function (response) {
+    $http.get('data/categories2.json').then(function (response) {
         console.log('DATA: ' + JSON.stringify(response.data[0]));
         $scope.items = response.data;
     }, function (err) {
@@ -247,31 +253,32 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
 
     $scope.addInterests = function () {
         console.log('Add interests called.');
+        selectedInterestsName = [];
+        angular.forEach($scope.selectedInterests, function (selectedInterest) {
+            console.log("SelectedInterest: ", selectedInterest.category);
+            selectedInterestsName.push(selectedInterest.category);
+        });
+        console.log("selectedInterests: " + selectedInterestsName);
+
         reqJson = {
             "userId": $scope.loginEmail,
-            "interests": $scope.selected
+            "interests": selectedInterestsName
         };
-        $scope.loginLoading = true;
-        $http.post('login', reqJson, { headers: { 'Content-Type': 'application/json' } }).then(function (response) {
+
+        $http.post('myinterests', reqJson, { headers: { 'Content-Type': 'application/json' } }).then(function (response) {
             if (response.data.error) {
                 console.log('Error: ' + response.data.error);
-                $scope.sessionUser = undefined;
                 showToast(response.data.error);
-                $scope.loginLoading = false;
             } else {
                 console.log('Login Successful ');
-                $scope.sessionUser = response.data;
-                $scope.loginLoading = false;
-                showToast("Login SuccessFul! Welcome");
-                $mdDialog.hide();
+                showToast("Saved Interests");
             }
         }, function (err) {
-            console.log("Error geting value from the Login API.");
-            $scope.sessionUser = undefined;
-            showToast("Error Calling API.");
-            $scope.loginLoading = false;
+            console.log("Error geting value from the MyInterests API.");
+            showToast("Error saving your interests.");
         });
     };
+
     $scope.showDetails = function (event) {
         console.log('showing details for event: ' + JSON.stringify(event));
         $scope.selectedEvent = event;
@@ -330,12 +337,72 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         $scope.participantArray = arrParticipant;
     };
 
-    $scope.fetchUserSuggestions = function () {
-        console.log('Fetching suggestions for user: ' + sessionUser.UserId + ', for community: ' + selectedCommunity.CommCenterName);
-        var reqJson = {
-            "userId": sessionUser.UserId,
-            "communityName": selectedCommunity.CommCenterName
+    $scope.showReceommendedEvents = function (btnState) {
+        if (btnState == true) {
+            console.log('Fetching suggestions for user: ' + $scope.sessionUser.UserId + ', for community: ' + $scope.selectedCommunity);
+            var reqJson = {
+                "userId": $scope.sessionUser.UserId,
+                "communityName": $scope.selectedCommunity
+            }
+            $http.post('mysuggestions', reqJson, { headers: { 'Content-Type': 'application/json' } }).then(function (response) {
+                if (response.data.error) {
+                    console.log('Error: ' + response.data.error);
+                    $scope.communityEvents = undefined;
+                    localStorageService.set('communityEvents', null);
+                    showToast(response.data.error);
+                } else {
+                    console.log('Fetched suggested events.');
+                    $scope.communityEvents = response.data;
+                    localStorageService.set('communityEvents', null);
+                    localStorageService.set('communityEvents', response.data);
+                }
+            }, function (err) {
+                console.log("Error geting value from the Login API.");
+                $scope.communityEvents = undefined;
+                localStorageService.set('communityEvents', null);
+                showToast("Error Calling Login API.");
+            });
+        } else {
+            console.log('Fetching all events for community: ' + $scope.selectedCommunity);
+            $http.get('community-events?communityName=' + $scope.selectedCommunity).then(function (response) {
+                $scope.communityEvents = response.data;
+                localStorageService.set('communityEvents', null);
+                localStorageService.set('communityEvents', response.data);
+            }, function (err) {
+                console.log("Error geting value from the community events API.");
+            });
         }
+
+    }
+
+    $scope.showRegisterPage = function (event) {
+        $scope.selectedEvent = event;
+        localStorageService.set('selectedEvent', null);
+        localStorageService.set('selectedEvent', event);
+        $window.location.href = '/registerEvent.html';
+    }
+
+    $scope.registerEvent = function () {
+        console.log('Registering for user: ' + $scope.sessionUser.UserId + ', for event: ' + $scope.selectedEvent.EventID);
+        var reqJson = {
+            "userId": $scope.sessionUser.UserId,
+            "eventId": $scope.selectedEvent.EventID
+        }
+        $http.post('registerForEvent', reqJson, { headers: { 'Content-Type': 'application/json' } }).then(function (response) {
+            if (response.data.error) {
+                console.log('Error: ' + response.data.error);
+                showToast(response.data.error);
+            } else {
+                console.log('Register Successful ');
+                showToast('Register Successful ');
+                $timeout(function () {
+                    $window.location.href = '/index.html';
+                }, 1000);
+            }
+        }, function (err) {
+            console.log("Error geting value from the Login API.");
+            showToast("Error Calling Login API.");
+        });
     }
 
 }]);
