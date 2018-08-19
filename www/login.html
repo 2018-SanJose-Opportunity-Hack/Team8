@@ -46,26 +46,33 @@
                         <label>Password</label>
                         <input ng-model="user.password" required="" type="password">
                     </md-input-container>
-                </form>
-            </div>
-        </md-content>
+                    <div class="bottom-sheet-demo inset" layout="row" layout-sm="column" layout-align="center" >
+                        </md-button>
+                        <md-button class="md-raised" ng-click="">
+                            Cancel
+                        </md-button>
+                        <md-button class="md-raised md-primary" ng-click="">
+                            Login
+                        </md-button>
+                    </div>
 
-        <md-button class="md-raised md-primary">Login</md-button>
         <div class="text-center p-t-12">
             <span class="txt1">
                 Forgot
             </span>
-            <a class="txt2" href="#">
-                Username / Password?
-            </a>
-        </div>
-        <div class="text-center p-t-50">
-            <a class="txt2" href="#">
-                Create your Account
-                <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-            </a>
-        </div>
-
+                        <a class="txt2" href="#">
+                            Username / Password?
+                        </a>
+                    </div>
+                    <div class="text-center p-t-50">
+                        <a class="txt2" href="#">
+                            Create your Account
+                            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </md-content>
     </div>
 
 </body>

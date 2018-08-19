@@ -54,7 +54,13 @@
                         <label>Confirm password</label>
                         <input ng-model="user.confirmPassword" type="password">
                     </md-input-container>
-                    <md-button type="submit" class="md-raised md-primary">Primary</md-button>
+                    <div class="bottom-sheet-demo inset" layout="row" layout-sm="column" layout-align="center" >
+                        </md-button>
+                        <md-button class="md-raised" ng-click="">
+                            Cancel
+                        </md-button>
+                        <md-button type="submit" class="md-raised md-primary" ng-click="">Submit</md-button>
+                    </div>
                 </form>
             </div>
         </md-content>
