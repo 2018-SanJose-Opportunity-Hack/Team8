@@ -117,12 +117,49 @@ server.post('/completeRegistration', function (req, res) {
 
 /* Store a user's interests for future use */
 server.post('/myinterests', function (req, res) {
+  console.log("POST /myinterests");
+  console.log("req.body : ",req.body);
+  var userId = escape(req.body.userid);
+  var interests = req.body.interests;
+  console.log(interests);
+  console.log(typeof(interests));
+  var findUser = users.find(function(user) {
+    if(user.UserId == userId){
+      return user;
+    }
+    return;
+  });
+  if(findUser) {
+    // interests.forEach(function(element){
+    //   console.log(element);
+    // });
+    findUser.interests = interests; 
+    res.status(200).send(findUser);
+  } else {
+    res.status(404).send({'error': 'Invalid userId. Please try again'});
+  }
 
 });
 
 /* Get suggested events for a user */
 server.post('/mysuggestions', function (req, res) {
-
+  console.log('POST /mysuggestions called');
+    var userId = escape(req.body.userId);
+    var communityName = req.body.communityName;
+    console.log('userId '+ userId + ' community Name: '+ communityName);
+    var count = 0;
+    var desiredUser = users.find(function (user) {
+        return user.UserId == userId;
+    });
+    var userInterests = desiredUser.interests || [];
+    var searchMatchingEvents = events.filter( function(event) {
+      return event.EventCommName == communityName && userInterests.some(v => event.EventName.toLowerCase().includes(v.toLowerCase())) && ++count < 10;
+    });
+    if(searchMatchingEvents) {
+      res.status(200).send(searchMatchingEvents);
+    } else {
+      res.status(200).send({'error': 'Sorry, couldn\'t find any results.'});
+    } 
 });
 
 /* Basic site search will return events or community centers */
