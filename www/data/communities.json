@@ -1,0 +1,121 @@
+[
+    {
+        "CommCenterID": 0,
+        "CommCenterName": "Alma Community Center",
+        "CommCenterAddress": "136 W. Alma Ave.",
+        "CommCenterZip": "95110",
+        "CommCenterLL": ""
+    },
+    {
+        "CommCenterID": 1,
+        "CommCenterName": "Berryessa Community Center",
+        "CommCenterAddress": "3050 Berryessa Rd.",
+        "CommCenterZip": "95132",
+        "CommCenterLL": ""
+    },
+    {
+        "CommCenterID": 2,
+        "CommCenterName": "Emma Prusch Farm Park Center",
+        "CommCenterAddress": "647 S. King Rd.",
+        "CommCenterZip": "95122",
+        "CommCenterLL": ""
+    },
+    {
+        "CommCenterID": 3,
+        "CommCenterName": "Grace Community Center",
+        "CommCenterAddress": "484 E. San Fernando St.",
+        "CommCenterZip": "95112",
+        "CommCenterLL": ""
+    },
+    {
+        "CommCenterID": 4,
+        "CommCenterName": "Millbrook Community Center",
+        "CommCenterAddress": "3200 Millbrook Dr.",
+        "CommCenterZip": "95148",
+        "CommCenterLL": ""
+    },
+    {
+        "CommCenterID": 5,
+        "CommCenterName": "Southside Community & Senior Center",
+        "CommCenterAddress": "5585 Cottle Rd.",
+        "CommCenterZip": "95123",
+        "CommCenterLL": ""
+    },
+    {
+        "CommCenterID": 6,
+        "CommCenterName": "Almaden Community Center",
+        "CommCenterAddress": "6445 Camden Ave.",
+        "CommCenterZip": "95120",
+        "CommCenterLL": ""
+    },
+    {
+        "CommCenterID": 7,
+        "CommCenterName": "Camden Community Center",
+        "CommCenterAddress": "3369 Union Ave.",
+        "CommCenterZip": "95124",
+        "CommCenterLL": ""
+    },
+    {
+        "CommCenterID": 8,
+        "CommCenterName": "Evergreen Community Center",
+        "CommCenterAddress": "4860 San Felipe Rd.",
+        "CommCenterZip": "95135",
+        "CommCenterLL": ""
+    },
+    {
+        "CommCenterID": 9,
+        "CommCenterName": "Hank Lopez Community Center",
+        "CommCenterAddress": "1694 Adrian Way",
+        "CommCenterZip": "95122",
+        "CommCenterLL": ""
+    },
+    {
+        "CommCenterID": 10,
+        "CommCenterName": "Roosevelt Community Center",
+        "CommCenterAddress": "901 E. Santa Clara St.",
+        "CommCenterZip": "95116",
+        "CommCenterLL": ""
+    },
+    {
+        "CommCenterID": 11,
+        "CommCenterName": "Willow Glen Community & Senior Center",
+        "CommCenterAddress": "2175 Lincoln Ave.",
+        "CommCenterZip": "95125",
+        "CommCenterLL": ""
+    },
+    {
+        "CommCenterID": 12,
+        "CommCenterName": "Bascom Community Center",
+        "CommCenterAddress": "1000 S. Bascom Ave.",
+        "CommCenterZip": "95128",
+        "CommCenterLL": ""
+    },
+    {
+        "CommCenterID": 13,
+        "CommCenterName": "Cypress Community & Senior Center",
+        "CommCenterAddress": "403 Cypress Ave.",
+        "CommCenterZip": "95117",
+        "CommCenterLL": ""
+    },
+    {
+        "CommCenterID": 14,
+        "CommCenterName": "Gardner Community Center",
+        "CommCenterAddress": "520 W. Verginia St.",
+        "CommCenterZip": "95125",
+        "CommCenterLL": ""
+    },
+    {
+        "CommCenterID": 15,
+        "CommCenterName": "Mayfair Community Center",
+        "CommCenterAddress": "2039 Kammerer Ave.",
+        "CommCenterZip": "95116",
+        "CommCenterLL": ""
+    },
+    {
+        "CommCenterID": 16,
+        "CommCenterName": "Seven Trees Community Center",
+        "CommCenterAddress": "3590 Cas Dr.",
+        "CommCenterZip": "95111",
+        "CommCenterLL": ""
+    }
+]
