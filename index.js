@@ -13,6 +13,14 @@ var port = process.env.PORT || 9000;
 var users = require(__dirname + '/www/data/Users.json');
 var communities = require(__dirname + '/www/data/communities.json');
 var events = require(__dirname + '/www/data/envents2.json');
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+         user: 'lnope2018@gmail.com',
+         pass: 'swanson18'
+     }
+ });
 
 var app = server.listen(port, function () {
   console.log('server listening on port ' + port);
@@ -280,4 +288,37 @@ server.get('/myregisteredevents', function (req, res) {
     } else {
       res.status(200).send({'error': 'Sorry, couldn\'t find any registered events.'});
     } 
+});
+
+server.get('/shareByEmail', function (req, res) {
+  var eventId = escape(req.query.eventId);
+  var recipientEmail = req.query.recipientEmail;
+
+  var desiredEvent = events.find( function(event) {
+    return event.EventID == eventId;
+  });
+
+  var eventName = desiredEvent.EventName;
+  var commCenterName = desiredEvent.EventCommName;
+  var pricePerPerson = desiredEvent.EventPricePerPerson;
+  var description = desiredEvent.EventDescription;
+
+
+  const mailOptions = {
+    from: 'lnope2018@gmail.com', // sender address
+    to: recipientEmail, // list of receivers
+    subject: 'Check out this event:' + eventName, // Subject line
+    html: '<p>Hey there, <br>' + commCenterName + ' is having the following event I thought you would be interested in - <br/> <h4>' + eventName+ '</h4> '+ description+ ' <br> Price per ticket: ' + pricePerPerson+  ' <br>Check out more events <a href="http://52.34.92.141:8080/index.html" target="_blank">here</a>. Thanks!</p>'// plain text body
+  };
+
+  transporter.sendMail(mailOptions, function (err, info) {
+    if(err) {
+      console.log(err);
+      res.status(200).send({'error': 'Error sending email, try again later'});
+    } else {
+      console.log(info);
+      res.status(200).send({'success': 'Email sent!'});
+    }
+     
+ });
 });
