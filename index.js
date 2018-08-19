@@ -28,12 +28,28 @@ server.get('/ping', function (req, res) {
 
 server.get('/community-events', function (req, res) {
   console.log('GET /community-events called');
-  console.log('Param Name: ' + req.query.community);
+  var communityName = unescape(req.query.communityName);
+  console.log('Param Name: ' + communityName);
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  //TODO: add logic here instead of returning hard coded.
-  res.status(200).send([{ "name": "Kayaking", "location": "Willow Lake, San Jose" }, { "name": "Soccer Game", "location": "Lee Fields, San Jose" }]);
+  
+  var communityCenter = communities.find( function (community) {
+      return communityName === community.CommCenterName;
+  });
+  console.log('The comm center is: ' + JSON.stringify(communityCenter));
+  if(communityCenter) {
+    var communityCenterEvents = events.filter( function(event) {
+      return event.CCId === communityCenter.CommCenterID;
+    });
+    if(communityCenterEvents) {
+      res.status(200).send(communityCenterEvents);
+    } else {
+      res.status(404).send('No upcoming events for this community center.');
+    }
+  } else {
+    res.status(404).send('No such community center found.');
+  }
 });
 
 server.get('/eventDetails', function (req, res) {
@@ -50,6 +66,6 @@ server.get('/eventDetails', function (req, res) {
   if(desiredEvent) {
     res.status(200).send(desiredEvent);
   } else {
-    res.status(404).send('No such event found');
+    res.status(404).send('No such event found.');
   }
 });
