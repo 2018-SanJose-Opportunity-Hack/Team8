@@ -270,5 +270,51 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         localStorageService.set('selectedEvent', event);
         $window.location.href = '/eventDetails.html';
     }
+    $scope.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
+        'MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI ' +
+        'WY').split(' ').map(function(state) {
+        return {abbrev: state};
+    });
+
+    $scope.isTextMsg = ('Y N').split(' ').map(function(state) {
+        return {abbrev: state};
+    });
+
+    $scope.participantArray =
+        [{ 'firstName': 'Agniezka', 'lastName': 'Hollan', 'age':'5', 'gender': 'male', 'dob': '2013/01/01' }
+        ];
+
+    $scope.addRow = function () {
+        console.log("Add Row Called");
+        if ($scope.firstName != undefined && $scope.lastName != undefined && $scope.age != undefined && $scope.gender != undefined && $scope.dob != undefined) {
+            var participant = [];
+            participant.firstName = $scope.firstName;
+            participant.lastName = $scope.lastName;
+            participant.age = $scope.age;
+            participant.gender = $scope.gender;
+            participant.dob = $scope.dob;
+
+            $scope.participantArray.push(participant);
+            console.log("Pushed to array");
+            // CLEAR TEXTBOX.
+            $scope.firstName = null;
+            $scope.lastName = null;
+            $scope.age = null;
+            $scope.gender = null;
+            $scope.dob = null;
+        }else{
+            console.log("",$scope.firstName,$scope.lastName,$scope.age,$scope.gender,$scope.dob);
+        }
+    };
+
+    $scope.removeRow = function () {
+        var arrParticipant = [];
+        angular.forEach($scope.participantArray, function (value) {
+            if (!value.Remove) {
+                arrParticipant.push(value);
+            }
+        });
+        $scope.participantArray = arrParticipant;
+    };
 
 }]);
