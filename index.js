@@ -44,10 +44,10 @@ server.get('/community-events', function (req, res) {
     if(communityCenterEvents) {
       res.status(200).send(communityCenterEvents);
     } else {
-      res.status(404).send({'error': 'No upcoming events for this community center.'});
+      res.status(200).send({'error': 'No upcoming events for this community center.'});
     }
   } else {
-    res.status(404).send({'error': 'No such community center found.'});
+    res.status(200).send({'error': 'No such community center found.'});
   }
 });
 
@@ -66,7 +66,7 @@ server.get('/eventDetails', function (req, res) {
   if(desiredEvent) {
     res.status(200).send(desiredEvent);
   } else {
-    res.status(404).send({'error': 'No such event found.'});
+    res.status(200).send({'error': 'No such event found.'});
   }
 });
 
@@ -89,7 +89,7 @@ server.post('/signup', function (req, res){
   };
   //TODO: please encrypt password
   var length = users.length;
-  users[length+1] = newUser;
+  users[length] = newUser;
   res.status(200).send({'success':'Sign Up complete!'});
 
 });
@@ -106,7 +106,7 @@ server.post('/login', function (req, res) {
   if(isLoggedInUser) {
     res.status(200).send(isLoggedInUser);
   } else {
-    res.status(404).send({'error': 'Invalid credentials. Please try again'});
+    res.status(200).send({'error': 'Invalid credentials. Please try again'});
   }
 });
 
@@ -132,6 +132,32 @@ server.get('/search', function (req, res) {
 
 /* Register for an event */
 server.post('/registerForEvent', function (req, res) {
+  console.log('POST /registerForEvent called');
+  var eventId = escape(req.body.eventId);
+  var userId = escape(req.body.userId);
 
+  console.log('Param Name: Event ID: ' + userId);
+  var desiredEvent = events.find( function(event) {
+    return event.EventID == eventId;
+  });
+  if(desiredEvent) {
+    desiredEvent.attendees = desiredEvent.attendees || []; 
+    var length = desiredEvent.attendees.length;
+    desiredEvent.attendees[length] = userId;
+
+    for(var i= 0; i< users.length; i++){
+      if(users[i].UserId == userId){
+        users[i].registeredEvents = users[i].registeredEvents || [];
+        var numEvents = users[i].registeredEvents.length;
+        users[i].registeredEvents[numEvents] = eventId;
+        console.log(JSON.stringify(users[i]));
+        break;
+       }
+    }
+
+    res.status(200).send({'success': 'Registration Complete.'});
+  } else {
+    res.status(200).send({'error': 'No such event found.'});
+  }
 });
 
