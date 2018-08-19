@@ -316,6 +316,10 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         }
     };
 
+    $scope.getImgPath = function () {
+        return 'img/img' + (Math.floor(Math.random() * (8 - 1 + 1)) + 1) + '.jpeg';
+    };
+
     $scope.removeRow = function () {
         var arrParticipant = [];
         angular.forEach($scope.participantArray, function (value) {
@@ -325,5 +329,13 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         });
         $scope.participantArray = arrParticipant;
     };
+
+    $scope.fetchUserSuggestions = function () {
+        console.log('Fetching suggestions for user: ' + sessionUser.UserId + ', for community: ' + selectedCommunity.CommCenterName);
+        var reqJson = {
+            "userId": sessionUser.UserId,
+            "communityName": selectedCommunity.CommCenterName
+        }
+    }
 
 }]);

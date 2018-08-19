@@ -14,7 +14,7 @@
 }
 .eventDetailsItem {
   margin: 2%;
-  font: bold;
+  font-weight: bold;
 }
 #mapid { height: 180px; }
 
