@@ -69,7 +69,7 @@
         </md-button>
     </md-content>
 
-    <div>
+    <div ng-if="communityEvents && communityEvents.length>0">
         <md-content ng-repeat="event in communityEvents" class="md-padding" layout-xs="column" layout="row">
             <div flex-xs flex-gt-xs="50" layout="column">
                 <md-card>
@@ -88,6 +88,11 @@
                     </md-card-actions>
                 </md-card>
             </div>
+        </md-content>
+    </div>
+    <div ng-if="communityEvents == undefined || communityEvents.length<=0">
+        <md-content class="md-padding" layout-xs="column" layout="row">
+            <font size='10'>No Events Found!</font>
         </md-content>
     </div>
 

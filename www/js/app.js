@@ -18,7 +18,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
     $scope.signupPassword = undefined;
 
 
-    $scope.fetchSession = function() {
+    $scope.fetchSession = function () {
         $scope.sessionUser = localStorageService.get('sessionUser');
         $scope.communities = localStorageService.get('communities');
         $scope.communityEvents = localStorageService.get('communityEvents');
@@ -118,7 +118,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
                 $scope.loginLoading = false;
                 showToast("Login SuccessFul! Welcome");
                 $mdDialog.hide();
-                $timeout(function() {
+                $timeout(function () {
                     $window.location.href = '/index.html';
                 }, 1000);
             }
@@ -131,7 +131,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         });
     };
 
-    $scope.logout = function() {
+    $scope.logout = function () {
         $scope.sessionUser = undefined;
         localStorageService.set('sessionUser', null);
         $window.location.href = '/index.html';
@@ -160,7 +160,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
                 $scope.signupLoading = false;
                 showToast("Signup SuccessFul! You can login now!");
                 $mdDialog.hide();
-                $timeout(function() {
+                $timeout(function () {
                     $window.location.href = '/index.html';
                 }, 1000);
             }
@@ -197,14 +197,18 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         $mdToast.show($mdToast.simple().textContent(message).hideDelay(3000));
     };
 
+    $scope.$watch('searchTerm', function (newValue, oldValue) {
+        if (newValue == undefined || newValue == '' || newValue.length == 0) {
+            loadCommunityEvents($scope.selectedCommunity);
+        }
+    });
+
     $scope.searchEvent = function (term) {
-        console.log('Search called for: ' + term);
-        $http.get('search?term=' + term).then(function (response) {
-            $scope.$apply(function () {
-                $scope.communityEvents = response.data;
-                localStorageService.set('communityEvents', null);
-                localStorageService.set('communityEvents', response.data);
-            });
+        console.log('Search called for: ' + term + ', for community: ' + $scope.selectedCommunity);
+        $http.get('search?term=' + term + '&communityName=' + $scope.selectedCommunity).then(function (response) {
+            $scope.communityEvents = response.data;
+            localStorageService.set('communityEvents', null);
+            localStorageService.set('communityEvents', response.data);
         }, function (err) {
             console.log("Error geting value from the community events API.");
         });
