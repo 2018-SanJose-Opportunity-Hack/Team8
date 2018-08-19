@@ -205,7 +205,7 @@
                                 </md-card-header> -->
                                 <img ng-src="{{item.img}}" class="md-card-image" alt="Washed Out">
                                 
-                                <md-checkbox  style="margin-left: 10px; margin-bottom: 0px" ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
+                                <md-checkbox  style="margin-left: 10px; margin-bottom: 0px" ng-checked="exists(item, selectedInterests)" ng-click="toggle(item, selectedInterests)">
                                     <md-card-title>
                                             <md-card-title-text>
                                                 <span class="md-headline">{{ item.category }}</span>
@@ -222,7 +222,7 @@
 
         <div flex="100">
             <h2 class="md-title">Selected Items</h2>
-            <code style="display: block; padding: 8px;">{{selected | json}}</code>
+            <code style="display: block; padding: 8px;">{{selectedInterests | json}}</code>
         </div>
     </div>
 
@@ -230,7 +230,7 @@
 
     <section layout="row" layout-sm="column" layout-align="end center" layout-wrap>
             <div class="label"></div>
-            <md-button class="md-raised md-primary" style="background-color: #DB515B; font-weight: bold">SHOW EVENTS</md-button>
+            <md-button class="md-raised md-primary" style="background-color: #DB515B; font-weight: bold" ng-click="addInterests()">SHOW EVENTS</md-button>
             
     </section>
 
