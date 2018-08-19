@@ -89,6 +89,7 @@ server.post('/signup', function (req, res){
     'password': password,
     'registrationComplete': 'false'
   };
+  //TODO: please encrypt password
   var length = users.length;
   users[length+1] = newUser;
   res.status(200).send({'success':'Sign Up complete!'});
@@ -101,11 +102,11 @@ server.post('/login', function (req, res) {
   var email = escape(req.body.email);
   var password = escape(req.body.password);
 
-  var isLoggedIn = users.find( function(user) {
+  var isLoggedInUser = users.find( function(user) {
     return user.email === email && user.password === password;
   });
-  if(isLoggedIn) {
-    res.status(200).send({'success':'Login Successful'});
+  if(isLoggedInUser) {
+    res.status(200).send(isLoggedInUser);
   } else {
     res.status(404).send({'error': 'Invalid credentials. Please try again'});
   }
