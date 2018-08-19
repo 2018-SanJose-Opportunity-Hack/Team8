@@ -56,22 +56,20 @@
     <!-- <md-button class="md-raised md-primary" ng-click="getLocation()">Get Location</md-button>
     <label hidden="true">Location is: </label>
     <span>{{position}}</span> -->
-
+    
     <md-content layout-xs="column" layout="row">
+        <label class="pull-left">Select Community Center:</label>
         <md-input-container>
-            <label>Communities</label>
             <md-select ng-model="selectedCommunity" ng-change="communitySelected(selectedCommunity)">
                 <md-option ng-repeat="comm in communities" ng-selected="comm==communities[0] ? true : false" ng-value="comm.CommCenterName">
                     {{comm.CommCenterName}}
                 </md-option>
             </md-select>
         </md-input-container>
-        <md-button class="md-primary" ng-click="filter()">Filter
-        </md-button>
         <md-switch ng-if="sessionUser != undefined" ng-model="recToggle" aria-label="Recommended Events" ng-change="showReceommendedEvents(recToggle)">
             Recommended Events
         </md-switch>
-        <md-button ng-if="sessionUser != undefined" ng-click="showRegisteredEvents()" class="md-primary">Registered Event
+        <md-button ng-if="sessionUser != undefined" ng-click="showRegisteredEvents()" class="md-primary">Registered Events
         </md-button>
     </md-content>
    
