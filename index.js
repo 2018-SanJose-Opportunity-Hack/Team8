@@ -2,7 +2,7 @@ var express = require('express');
 
 var server = express();
 
-server.use(express.static(__dirname + '/www'));
+server.use(express.static(__dirname + '/www')).use('/node_modules', express.static('node_modules'));
 
 var bodyParser = require('body-parser');
 server.use(bodyParser.json());

@@ -1,21 +1,44 @@
-var app = angular.module('root', ['ngMaterial']);
+var app = angular.module('root', ['ngMaterial', 'LocalStorageModule']);
 
-app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', function ($scope, $http, $window, $mdDialog, $mdToast) {
+app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', '$timeout', 'localStorageService', function ($scope, $http, $window, $mdDialog, $mdToast, $timeout, localStorageService) {
 
     $scope.title = 'City of San Jose: Parks';
     $scope.sessionUser = undefined;
     $scope.communities = [];
     $scope.communityEvents = [];
     $scope.loginLoading = false;
+    $scope.signupLoading = false;
+    $scope.selectedEvent = undefined;
 
     $scope.loginEmail = undefined;
     $scope.loginPassword = undefined;
+    $scope.signupFirstName = undefined;
+    $scope.signupLastName = undefined;
+    $scope.signupEmail = undefined;
+    $scope.signupPassword = undefined;
+
+
+    $scope.fetchSession = function() {
+        $scope.sessionUser = localStorageService.get('sessionUser');
+        $scope.communities = localStorageService.get('communities');
+        $scope.communityEvents = localStorageService.get('communityEvents');
+        $scope.selectedEvent = localStorageService.get('selectedEvent');
+        $scope.selectedCommunity = localStorageService.get('selectedCommunity');
+
+        var invalidAuthPage = $window.location.href.includes('/login.html') || $window.location.href.includes('/signup.html');
+        if (invalidAuthPage) {
+            $window.location.href = '/index.html';
+        }
+    }
 
     var filePath = 'data/communities.json';
-    $http.get(filePath).then(function (data) {
-        // console.log('DATA: ' + JSON.stringify(data));
-        $scope.communities = data.data;
+    $http.get(filePath).then(function (response) {
+        $scope.communities = response.data;
+        localStorageService.set('communities', null);
+        localStorageService.set('communities', response.data);
         $scope.selectedCommunity = $scope.communities[0].CommCenterName
+        localStorageService.set('selectedCommunity', null);
+        localStorageService.set('selectedCommunity', $scope.communities[0].CommCenterName);
         $scope.communitySelected($scope.selectedCommunity);
     }, function (err) {
         console.log("Error getting data from the communities JSON file: " + filePath);
@@ -26,16 +49,16 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         if (navigator.geolocation) {
             console.log('geolocation available.');
             navigator.geolocation.getCurrentPosition(function (position) {
-                // $scope.$apply(function () {
+                $scope.$apply(function () {
                     $scope.position = { 'latitude': position.coords.latitude, 'longitude': position.coords.longitude };
                     console.log('Dummy distance: ' + calculatedistance(position.coords.latitude, position.coords.latitude + 10, position.coords.longitude, position.coords.longitude + 10) + ' meters');
-                // });
+                });
             });
         } else {
             console.log('no geolocation');
-            // $scope.$apply(function () {
+            $scope.$apply(function () {
                 $scope.position = 'no geolocation available!';
-            // });
+            });
         }
     }
 
@@ -84,29 +107,70 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
             if (response.data.error) {
                 console.log('Error: ' + response.data.error);
                 $scope.sessionUser = undefined;
+                localStorageService.set('sessionUser', null);
                 showToast(response.data.error);
                 $scope.loginLoading = false;
             } else {
                 console.log('Login Successful ');
                 $scope.sessionUser = response.data;
+                localStorageService.set('sessionUser', null);
+                localStorageService.set('sessionUser', response.data);
                 $scope.loginLoading = false;
                 showToast("Login SuccessFul! Welcome");
                 $mdDialog.hide();
+                $timeout(function() {
+                    $window.location.href = '/index.html';
+                }, 1000);
             }
         }, function (err) {
             console.log("Error geting value from the Login API.");
             $scope.sessionUser = undefined;
-            showToast("Error Calling API.");
+            localStorageService.set('sessionUser', null);
+            showToast("Error Calling Login API.");
             $scope.loginLoading = false;
         });
     };
 
+    $scope.logout = function() {
+        $scope.sessionUser = undefined;
+        localStorageService.set('sessionUser', null);
+        $window.location.href = '/index.html';
+    }
+
     $scope.signupAction = function () {
         console.log('Called Signup Action.');
         reqJson = {
-
+            "firstname": $scope.signupFirstName,
+            "lastname": $scope.signupLastName,
+            "email": $scope.signupEmail,
+            "password": $scope.signupPassword
         };
-        console.log();
+        $scope.signupLoading = true;
+        $http.post('signup', reqJson, { headers: { 'Content-Type': 'application/json' } }).then(function (response) {
+            if (response.data.error) {
+                console.log('Error: ' + response.data.error);
+                $scope.sessionUser = undefined;
+                localStorageService.set('sessionUser', null);
+                showToast(response.data.error);
+                $scope.signupLoading = false;
+            } else {
+                console.log('Signup Successful ');
+                $scope.sessionUser = undefined;
+                localStorageService.set('sessionUser', null);
+                $scope.signupLoading = false;
+                showToast("Signup SuccessFul! You can login now!");
+                $mdDialog.hide();
+                $timeout(function() {
+                    $window.location.href = '/index.html';
+                }, 1000);
+            }
+        }, function (err) {
+            console.log("Error geting value from the Signup API.");
+            $scope.sessionUser = undefined;
+            localStorageService.set('sessionUser', null);
+            showToast("Error Calling Signup API.");
+            $scope.signupLoading = false;
+        });
     }
 
     $scope.closeDialog = function () {
@@ -120,10 +184,10 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
 
     loadCommunityEvents = function (selectedCommunity) {
         console.log('Loading the community Events for community: ' + selectedCommunity);
-        $http.get('community-events?communityName=' + selectedCommunity).then(function (data) {
-            // $scope.$apply(function () {
-                $scope.communityEvents = data.data;
-            // });
+        $http.get('community-events?communityName=' + selectedCommunity).then(function (response) {
+            $scope.communityEvents = response.data;
+            localStorageService.set('communityEvents', null);
+            localStorageService.set('communityEvents', response.data);
         }, function (err) {
             console.log("Error geting value from the community events API.");
         });
@@ -135,13 +199,23 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
 
     $scope.searchEvent = function (term) {
         console.log('Search called for: ' + term);
-        $http.get('search?term=' + term).then(function (data) {
+        $http.get('search?term=' + term).then(function (response) {
             $scope.$apply(function () {
-                $scope.communityEvents = data.data;
+                $scope.communityEvents = response.data;
+                localStorageService.set('communityEvents', null);
+                localStorageService.set('communityEvents', response.data);
             });
         }, function (err) {
             console.log("Error geting value from the community events API.");
         });
     };
+
+    $scope.showDetails = function (event) {
+        console.log('showing details for event: ' + JSON.stringify(event));
+        $scope.selectedEvent = event;
+        localStorageService.set('selectedEvent', null);
+        localStorageService.set('selectedEvent', event);
+        $window.location.href = '/eventDetails.html';
+    }
 
 }]);
