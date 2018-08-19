@@ -63,21 +63,28 @@ app.controller('index', ['$scope', '$http', '$window', function ($scope, $http, 
 
 
     // Categories
-    $scope.items = ["Sports", "Dance", "Art"];
-      $scope.selected = [];
+    //$scope.items = [{"category":"sports", "img":"./img/img3.jpeg"}, {"category":"dance", "img":"./img/img3.jpeg"}, {"category":"arts", "img":"./img/img3.jpeg"}];
+    $scope.items = []
+    $http.get('data/categories.json').then(function (response) {
+        console.log('DATA: ' + JSON.stringify(response.data[0]));
+        $scope.items = response.data;
+    }, function (err) {
+        console.log("Error getting data from the categories JSON file.");
+    });  
+    $scope.selected = [];
 
-      $scope.toggle = function (item, list) {
-        var idx = list.indexOf(item);
-        if (idx > -1) {
-          list.splice(idx, 1);
-        }
-        else {
-          list.push(item);
-        }
-      };
+    $scope.toggle = function (item, list) {
+    var idx = list.indexOf(item);
+    if (idx > -1) {
+        list.splice(idx, 1);
+    }
+    else {
+        list.push(item);
+    }
+    };
 
-      $scope.exists = function (item, list) {
-        return list.indexOf(item) > -1;
-      };
+    $scope.exists = function (item, list) {
+    return list.indexOf(item) > -1;
+    };
 
 }]);

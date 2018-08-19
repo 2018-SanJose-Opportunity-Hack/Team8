@@ -180,14 +180,16 @@
 
     <!-- <div ng-controller="AppCtrl" class="md-padding" ng-cloak style="min-height:270px"> -->
     <div layout="row" layout-wrap class="md-padding" ng-cloak style="min-height:270px">
-
+        <h2>Select your interests</h2>
+        <br/>
+        <h4>Choose at least three interests for you and your kids, parents for better experience</h4>
         <!-- <div flex="100" flex-gt-sm="50" layout="column"> -->
             <div>
                 <!--
                     In IE, we cannot apply flex directly to <fieldset>
                     @see https://github.com/philipwalton/flexbugs#9-some-html-elements-cant-be-flex-containers
                   -->
-                <fieldset class="standard">
+                <fieldset class="standard" style="border-top: 0">
                      <!-- <legend>Using &lt;md-checkbox&gt; with &lt;ng-checked&gt; </legend> -->
                     <div layout="row" layout-wrap flex>
                         <div flex="25" ng-repeat="item in items">
@@ -201,12 +203,12 @@
                                         <span class="md-subhead">Material</span>
                                     </md-card-header-text>
                                 </md-card-header> -->
-                                <img ng-src="./img/img3.jpeg" class="md-card-image" alt="Washed Out">
+                                <img ng-src="{{item.img}}" class="md-card-image" alt="Washed Out">
                                 
-                                <md-checkbox  style="margin-left: 10px" ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
+                                <md-checkbox  style="margin-left: 10px; margin-bottom: 0px" ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
                                     <md-card-title>
                                             <md-card-title-text>
-                                                <span class="md-headline">{{ item }}</span>
+                                                <span class="md-headline">{{ item.category }}</span>
                                             </md-card-title-text>
                                     </md-card-title>
                                     <!-- <span ng-if="exists(item, selected)">selected</span> -->
@@ -225,6 +227,12 @@
     </div>
 
     <!-- </div> -->
+
+    <section layout="row" layout-sm="column" layout-align="end center" layout-wrap>
+            <div class="label"></div>
+            <md-button class="md-raised md-primary" style="background-color: #DB515B; font-weight: bold">SHOW EVENTS</md-button>
+            
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
