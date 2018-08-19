@@ -262,7 +262,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         console.log("selectedInterests: " + selectedInterestsName);
 
         reqJson = {
-            "userId": $scope.loginEmail,
+            "userId": 1,
             "interests": selectedInterestsName
         };
 
@@ -278,6 +278,9 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
             console.log("Error geting value from the MyInterests API.");
             showToast("Error saving your interests.");
         });
+        $timeout(function () {
+            $window.location.href = '/index.html';
+        }, 1000);
     };
 
     $scope.showDetails = function (event) {
