@@ -66,6 +66,10 @@
     <label hidden="true">Location is: </label>
     <span>{{position}}</span>
 
+    <md-button class="md-primary md-raised" ng-if="sessionUser == undefined" ng-click="showLogin($event)">
+        Login
+    </md-button>
+
     <md-content class="md-padding" layout-xs="column" layout="row">
         <md-input-container>
             <label>Communities</label>

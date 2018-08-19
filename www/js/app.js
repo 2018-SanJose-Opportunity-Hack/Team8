@@ -3,17 +3,10 @@ var app = angular.module('root', ['ngMaterial']);
 app.controller('index', ['$scope', '$http', '$window', function ($scope, $http, $window) {
 
     $scope.title = 'City of San Jose: Parks';
-
-    $scope.user = {
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        password: '',
-        confirmPassword: ''
-    };
-
+    $scope.sessionUser = undefined;
     $scope.communities = [];
+    $scope.communityEvents = [];
+
     var filePath = 'data/communities.json';
     $http.get(filePath).then(function (data) {
         // console.log('DATA: ' + JSON.stringify(data));
@@ -51,8 +44,6 @@ app.controller('index', ['$scope', '$http', '$window', function ($scope, $http, 
         var d = Math.acos(Math.sin(φ1) * Math.sin(φ2) + Math.cos(φ1) * Math.cos(φ2) * Math.cos(Δλ)) * R;
         return d;
     }
-
-    $scope.communityEvents = [];
 
     $scope.communitySelected = function (selectedCommunity) {
         console.log('Comunity selected: ' + selectedCommunity);
