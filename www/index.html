@@ -82,7 +82,7 @@
                 <md-card>
                     <md-card-title-media>
                         <div class="md-media-lg card-media">
-                            <img ng-src="img/img5.jpeg" class="md-card-image">
+                            <img ng-src="{{event.img}}" class="md-card-image">
                         </div>
                     </md-card-title-media>
                     <md-card-title>
@@ -92,7 +92,7 @@
                         </md-card-title-text>
                     </md-card-title>
                     <md-card-actions layout="row" layout-align="end center">
-                        <md-button class="md-raised md-primary" ng-click="registerEvent(event)">Register</md-button>
+                        <md-button class="md-raised md-primary" ng-click="showRegisterPage(event)">Register</md-button>
                         <md-button class="md-raised md-primary" ng-click="showDetails(event)">View Details</md-button>
                     </md-card-actions>
                 </md-card>

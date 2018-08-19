@@ -339,7 +339,6 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
 
     $scope.showReceommendedEvents = function (btnState) {
         if (btnState ==true) {
-            console.log($scope.selectedCommunity);
             console.log('Fetching suggestions for user: ' + $scope.sessionUser.UserId + ', for community: ' + $scope.selectedCommunity);
             var reqJson = {
                 "userId": $scope.sessionUser.UserId,
@@ -363,7 +362,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
                 localStorageService.set('communityEvents', null);
                 showToast("Error Calling Login API.");
             });
-        }  else {
+        } else {
             console.log('Fetching all events for community: ' + $scope.selectedCommunity);
             $http.get('community-events?communityName=' + $scope.selectedCommunity).then(function (response) {
                 $scope.communityEvents = response.data;
@@ -374,6 +373,32 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
             });
         }
         
+    }
+
+    $scope.showRegisterPage = function(event) {
+        $scope.selectedEvent = event;
+        localStorageService.set('selectedEvent', null);
+        localStorageService.set('selectedEvent', event);
+        $window.location.href = '/registerEvent.html';
+    }
+
+    $scope.registerEvent = function() {
+        console.log('Registering for user: ' + $scope.sessionUser.UserId + ', for event: ' + $scope.selectedEvent.EventID);
+        var reqJson = {
+            "userId": $scope.sessionUser.UserId,
+            "eventId": $scope.selectedEvent.EventID
+        }
+        $http.post('registerForEvent', reqJson, { headers: { 'Content-Type': 'application/json' } }).then(function (response) {
+            if (response.data.error) {
+                console.log('Error: ' + response.data.error);
+                showToast(response.data.error);
+            } else {
+                console.log('Register Successful ');
+            }
+        }, function (err) {
+            console.log("Error geting value from the Login API.");
+            showToast("Error Calling Login API.");
+        });
     }
 
 }]);
