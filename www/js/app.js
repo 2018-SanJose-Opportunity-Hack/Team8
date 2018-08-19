@@ -14,13 +14,14 @@ app.controller('index', ['$scope', '$http', '$window', function ($scope, $http, 
     };
 
     $scope.communities = [];
-    $http.get('../data/communities.json').then(function (data) {
+    var filePath = 'data/communities.json';
+    $http.get(filePath).then(function (data) {
         // console.log('DATA: ' + JSON.stringify(data));
         $scope.communities = data.data;
         $scope.selectedCommunity = $scope.communities[0].CommCenterName
         $scope.communitySelected($scope.selectedCommunity);
     }, function (err) {
-        console.log("Error getting data from the communities JSON file.");
+        console.log("Error getting data from the communities JSON file: " + filePath);
     });
 
     $scope.getLocation = function () {
@@ -59,12 +60,12 @@ app.controller('index', ['$scope', '$http', '$window', function ($scope, $http, 
     };
 
     loadCommunityEvents = function (selectedCommunity) {
-        console.log('Loading the community Events');
-        $http.get('community-events?community=' + selectedCommunity).then(function (data) {
+        console.log('Loading the community Events for community: ' + selectedCommunity);
+        $http.get('community-events?communityName=' + selectedCommunity).then(function (data) {
             // console.log('DATA: ' + JSON.stringify(data));
             $scope.communityEvents = data.data;
         }, function (err) {
-            console.log("Error getting data from the communities JSON file.");
+            console.log("Error geting value from the community events API.");
         });
     }
 
