@@ -117,6 +117,19 @@ server.post('/completeRegistration', function (req, res) {
 
 /* Store a user's interests for future use */
 server.post('/myinterests', function (req, res) {
+  console.log("POST /myinterests");
+  console.log("req.body : ",req.body);
+  var userId = escape(req.body.userid);
+  var interests = escape(req.body.interests);
+
+  var findUserId = users.find( function(user) {
+    return user.UserId === userId;
+  });
+  if(findUserId) {
+    res.status(200).send(findUserId);
+  } else {
+    res.status(404).send({'error': 'Invalid userId. Please try again'});
+  }
 
 });
 
