@@ -177,11 +177,11 @@ server.get('/search', function (req, res) {
 
 /* Register for an event */
 server.post('/registerForEvent', function (req, res) {
-  console.log('POST /registerForEvent called');
+  console.log('POST /registerForEvent called: req.body: ',req.body);
   var eventId = escape(req.body.eventId);
   var userId = escape(req.body.userId);
 
-  console.log('Param Name: Event ID: ' + userId);
+  console.log('Param Name: Event ID: ' + eventId);
   var desiredEvent = events.find( function(event) {
     return event.EventID == eventId;
   });
@@ -206,3 +206,24 @@ server.post('/registerForEvent', function (req, res) {
   }
 });
 
+//Get Registered Events for user
+server.get('/myregisteredevents', function (req, res) {
+  console.log('GET /myregisteredevents called');
+    var userId = escape(req.query.userId);
+    
+    console.log('userId '+ userId);
+    var count = 0;
+    var desiredUser = users.find(function (user) {
+        return user.UserId == userId;
+    });
+    var registeredEvents = desiredUser.registeredEvents || [];
+    var searchMatchingEvents = events.filter( function(event) {
+      return event.EventID == registeredEvents[0];
+    });
+    console.log("registered events: ",registeredEvents)
+    if(searchMatchingEvents) {
+      res.status(200).send(searchMatchingEvents);
+    } else {
+      res.status(200).send({'error': 'Sorry, couldn\'t find any registered events.'});
+    } 
+});
