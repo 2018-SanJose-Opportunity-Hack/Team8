@@ -45,10 +45,10 @@ server.get('/community-events', function (req, res) {
     if(communityCenterEvents) {
       res.status(200).send(communityCenterEvents);
     } else {
-      res.status(404).send('No upcoming events for this community center.');
+      res.status(404).send({'error': 'No upcoming events for this community center.'});
     }
   } else {
-    res.status(404).send('No such community center found.');
+    res.status(404).send({'error': 'No such community center found.'});
   }
 });
 
@@ -66,6 +66,6 @@ server.get('/eventDetails', function (req, res) {
   if(desiredEvent) {
     res.status(200).send(desiredEvent);
   } else {
-    res.status(404).send('No such event found.');
+    res.status(404).send({'error': 'No such event found.'});
   }
 });
