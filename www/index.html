@@ -24,18 +24,15 @@
     <!-- Main navigation -->
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container">
-
             <!-- Company name shown on mobile -->
             <a class="navbar-brand" href="#">City of
                 <span>San Jose</span>
             </a>
-
             <!-- Mobile menu toggle -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar"
                 aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <!-- Main navigation items -->
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav mr-auto justify-content-end">
@@ -44,59 +41,62 @@
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link" href="#">Reservations</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link" href="#">Donation</a>
                     </li>
                 </ul>
-
             </div>
-
         </div>
     </nav>
 
-
-
-    <md-content class="md-padding" layout-xs="column" layout="row">
-        <div flex-xs flex-gt-xs="50" layout="column row">
-            <md-card>
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">Card with image</span>
-                        <span class="md-subhead">Large</span>
-                    </md-card-title-text>
-                    <md-card-title-media>
-                        <div class="md-media-lg card-media"></div>
-                    </md-card-title-media>
-                </md-card-title>
-                <md-card-actions layout="row" layout-align="end center">
-                    <md-button>Action 1</md-button>
-                    <md-button>Action 2</md-button>
-                </md-card-actions>
-            </md-card>
-
-            <md-card>
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">Card with image</span>
-                        <span class="md-subhead">Large</span>
-                    </md-card-title-text>
-                    <md-card-title-media>
-                        <div class="md-media-lg card-media"></div>
-                    </md-card-title-media>
-                </md-card-title>
-                <md-card-actions layout="row" layout-align="end center">
-                    <md-button>Action 1</md-button>
-                    <md-button>Action 2</md-button>
-                </md-card-actions>
-            </md-card>
-        </div>
+    <md-content class="md-padding float-right" layout-xs="column" layout="row">
+        <form id="searchform">
+            <md-input-container>
+                <label>Search</label>
+                <input ng-model="searchTerm">
+            </md-input-container>
+            <md-button class="md-raised md-primary" ng-click="search(searchTerm)" ng-disabled="searchTerm == undefined || searchTerm.length <= 0">Search</md-button>
+        </form>
     </md-content>
 
+    <md-content class="md-padding" layout-xs="column" layout="row">
+        <md-input-container>
+            <label>Communities</label>
+            <md-select ng-model="selectedCommunity" ng-change="communitySelected(selectedCommunity)">
+                <md-option ng-repeat="comm in communities" ng-value="comm.CommCenterName">
+                    {{comm.CommCenterName}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <md-button class="md-raised md-primary">Filter
+            <i class="fas fa-filter"></i>
+        </md-button>
+    </md-content>
+
+    <div>
+        <md-content ng-repeat="event in communityEvents" class="md-padding" layout-xs="column" layout="row">
+            <div flex-xs flex-gt-xs="50" layout="column">
+                <md-card>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">{{event.name}}</span>
+                            <span class="md-subhead">{{event.location}}</span>
+                        </md-card-title-text>
+                        <md-card-title-media>
+                            <div class="md-media-lg card-media"></div>
+                        </md-card-title-media>
+                    </md-card-title>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button class="md-raised md-primary">Register</md-button>
+                        <md-button class="md-raised md-primary">View Details</md-button>
+                    </md-card-actions>
+                </md-card>
+            </div>
+        </md-content>
+    </div>
 
 
     <!-- Footer -->
