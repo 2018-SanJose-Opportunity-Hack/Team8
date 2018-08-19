@@ -29,20 +29,31 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         if (invalidAuthPage) {
             $window.location.href = '/index.html';
         }
-    }
 
-    var filePath = 'data/communities.json';
-    $http.get(filePath).then(function (response) {
-        $scope.communities = response.data;
-        localStorageService.set('communities', null);
-        localStorageService.set('communities', response.data);
-        $scope.selectedCommunity = $scope.communities[0].CommCenterName
-        localStorageService.set('selectedCommunity', null);
-        localStorageService.set('selectedCommunity', $scope.communities[0].CommCenterName);
-        $scope.communitySelected($scope.selectedCommunity);
-    }, function (err) {
-        console.log("Error getting data from the communities JSON file: " + filePath);
-    });
+        if ($window.location.href.includes('/index.html')) {
+            console.log('Loading initial communities for home page');
+            $http.get('data/communities.json').then(function (response) {
+                $scope.communities = response.data;
+                localStorageService.set('communities', null);
+                localStorageService.set('communities', response.data);
+                $scope.selectedCommunity = $scope.communities[0].CommCenterName
+                localStorageService.set('selectedCommunity', null);
+                localStorageService.set('selectedCommunity', $scope.communities[0].CommCenterName);
+                $scope.communitySelected($scope.selectedCommunity);
+            }, function (err) {
+                console.log("Error getting data from the communities JSON file: 'data/communities.json'");
+            });
+
+        }
+    };
+
+    if ($window.location.href.includes('/index.html')) {
+        $scope.$watch('searchTerm', function (newValue, oldValue) {
+            if (newValue == undefined || newValue == '' || newValue.length == 0) {
+                loadCommunityEvents($scope.selectedCommunity);
+            }
+        });
+    }
 
     $scope.getLocation = function () {
         console.log('fetching location.');
@@ -119,7 +130,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
                 showToast("Login SuccessFul! Welcome");
                 $mdDialog.hide();
                 $timeout(function () {
-                    $window.location.href = '/index.html';
+                    $window.location.reload();
                 }, 1000);
             }
         }, function (err) {
@@ -134,7 +145,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
     $scope.logout = function () {
         $scope.sessionUser = undefined;
         localStorageService.set('sessionUser', null);
-        $window.location.href = '/index.html';
+        $window.location.reload();
     }
 
     $scope.signupAction = function () {
@@ -197,12 +208,6 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         $mdToast.show($mdToast.simple().textContent(message).hideDelay(3000));
     };
 
-    $scope.$watch('searchTerm', function (newValue, oldValue) {
-        if (newValue == undefined || newValue == '' || newValue.length == 0) {
-            loadCommunityEvents($scope.selectedCommunity);
-        }
-    });
-
     $scope.searchEvent = function (term) {
         console.log('Search called for: ' + term + ', for community: ' + $scope.selectedCommunity);
         $http.get('search?term=' + term + '&communityName=' + $scope.selectedCommunity).then(function (response) {
@@ -223,21 +228,21 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         $scope.items = response.data;
     }, function (err) {
         console.log("Error getting data from the categories JSON file.");
-    });  
+    });
     $scope.selectedInterests = [];
 
     $scope.toggle = function (item, list) {
-    var idx = list.indexOf(item);
-    if (idx > -1) {
-        list.splice(idx, 1);
-    }
-    else {
-        list.push(item);
-    }
+        var idx = list.indexOf(item);
+        if (idx > -1) {
+            list.splice(idx, 1);
+        }
+        else {
+            list.push(item);
+        }
     };
 
     $scope.exists = function (item, list) {
-    return list.indexOf(item) > -1;
+        return list.indexOf(item) > -1;
     };
 
     $scope.addInterests = function () {
@@ -276,16 +281,16 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
     }
     $scope.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
         'MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI ' +
-        'WY').split(' ').map(function(state) {
-        return {abbrev: state};
-    });
+        'WY').split(' ').map(function (state) {
+            return { abbrev: state };
+        });
 
-    $scope.isTextMsg = ('Y N').split(' ').map(function(state) {
-        return {abbrev: state};
+    $scope.isTextMsg = ('Y N').split(' ').map(function (state) {
+        return { abbrev: state };
     });
 
     $scope.participantArray =
-        [{ 'firstName': 'Agniezka', 'lastName': 'Hollan', 'age':'5', 'gender': 'male', 'dob': '2013/01/01' }
+        [{ 'firstName': 'Agniezka', 'lastName': 'Hollan', 'age': '5', 'gender': 'male', 'dob': '2013/01/01' }
         ];
 
     $scope.addRow = function () {
@@ -306,8 +311,8 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
             $scope.age = null;
             $scope.gender = null;
             $scope.dob = null;
-        }else{
-            console.log("",$scope.firstName,$scope.lastName,$scope.age,$scope.gender,$scope.dob);
+        } else {
+            console.log("", $scope.firstName, $scope.lastName, $scope.age, $scope.gender, $scope.dob);
         }
     };
 
