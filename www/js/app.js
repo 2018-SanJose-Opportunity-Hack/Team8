@@ -174,7 +174,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
                 showToast("Signup SuccessFul! You can login now!");
                 $mdDialog.hide();
                 $timeout(function () {
-                    $window.location.href = '/index.html';
+                    $window.location.href = '/categories.html';
                 }, 1000);
             }
         }, function (err) {
