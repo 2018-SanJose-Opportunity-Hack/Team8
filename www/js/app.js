@@ -14,7 +14,7 @@ app.controller('index', ['$scope', '$http', '$window', function ($scope, $http, 
     };
 
     $scope.communities = [];
-    $http.get('data/communities.json').then(function (data) {
+    $http.get('../data/communities.json').then(function (data) {
         // console.log('DATA: ' + JSON.stringify(data));
         $scope.communities = data.data;
         $scope.selectedCommunity = $scope.communities[0].CommCenterName
