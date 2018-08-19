@@ -254,17 +254,17 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
     $scope.addInterests = function () {
         console.log('Add interests called.');
         selectedInterestsName = [];
-        angular.forEach($scope.selectedInterests, function(selectedInterest){
-            console.log("SelectedInterest: ",selectedInterest.category);
+        angular.forEach($scope.selectedInterests, function (selectedInterest) {
+            console.log("SelectedInterest: ", selectedInterest.category);
             selectedInterestsName.push(selectedInterest.category);
         });
-        console.log("selectedInterests: "+selectedInterestsName);
+        console.log("selectedInterests: " + selectedInterestsName);
 
         reqJson = {
             "userId": $scope.loginEmail,
             "interests": selectedInterestsName
         };
-        
+
         $http.post('myinterests', reqJson, { headers: { 'Content-Type': 'application/json' } }).then(function (response) {
             if (response.data.error) {
                 console.log('Error: ' + response.data.error);
@@ -338,7 +338,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
     };
 
     $scope.showReceommendedEvents = function (btnState) {
-        if (btnState ==true) {
+        if (btnState == true) {
             console.log('Fetching suggestions for user: ' + $scope.sessionUser.UserId + ', for community: ' + $scope.selectedCommunity);
             var reqJson = {
                 "userId": $scope.sessionUser.UserId,
@@ -372,17 +372,17 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
                 console.log("Error geting value from the community events API.");
             });
         }
-        
+
     }
 
-    $scope.showRegisterPage = function(event) {
+    $scope.showRegisterPage = function (event) {
         $scope.selectedEvent = event;
         localStorageService.set('selectedEvent', null);
         localStorageService.set('selectedEvent', event);
         $window.location.href = '/registerEvent.html';
     }
 
-    $scope.registerEvent = function() {
+    $scope.registerEvent = function () {
         console.log('Registering for user: ' + $scope.sessionUser.UserId + ', for event: ' + $scope.selectedEvent.EventID);
         var reqJson = {
             "userId": $scope.sessionUser.UserId,
@@ -394,6 +394,10 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
                 showToast(response.data.error);
             } else {
                 console.log('Register Successful ');
+                showToast('Register Successful ');
+                $timeout(function () {
+                    $window.location.href = '/index.html';
+                }, 1000);
             }
         }, function (err) {
             console.log("Error geting value from the Login API.");
