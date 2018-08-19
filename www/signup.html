@@ -28,38 +28,43 @@
     <div layout="column" ng-cloak="" class="md-inline-form inputdemoBasicUsage">
         <md-content layout-padding="">
             <div>
-                <form name="userForm" method="POST" action="/signup">
+                <form name="userForm" method="POST" ng-submit="signupAction()">
 
                     <md-input-container class="md-block" flex-gt-sm="">
                         <label>First name</label>
-                        <input ng-model="user.firstName" name="firstname">
+                        <input required ng-model="user.firstName" name="firstname">
                     </md-input-container>
 
                     <md-input-container class="md-block" flex-gt-sm="">
                         <label>Last Name</label>
-                        <input ng-model="user.lastName" name="lastname">
+                        <input required ng-model="user.lastName" name="lastname">
                     </md-input-container>
 
                     <md-input-container class="md-block">
                         <label>Email Address (User ID)</label>
-                        <input ng-model="user.email" type="email" name="email">
+                        <input required ng-model="user.email" type="email" name="email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/">
+                        <div ng-if="userForm.name.$error">
+                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                Your userid is email and must be between 10 and 100 characters long and look like an e-mail address.
+                            </div>
+                        </div>
                     </md-input-container>
 
                     <md-input-container class="md-block">
                         <label>Password</label>
-                        <input ng-model="user.password" type="password" name="password">
+                        <input required ng-model="user.password" type="password" name="password">
                     </md-input-container>
 
                     <md-input-container class="md-block">
                         <label>Confirm password</label>
-                        <input ng-model="user.confirmPassword" type="password">
+                        <input required ng-model="user.confirmPassword" type="password">
                     </md-input-container>
-                    <div class="bottom-sheet-demo inset" layout="row" layout-sm="column" layout-align="center" >
+                    <div class="bottom-sheet-demo inset" layout="row" layout-sm="column" layout-align="center">
                         </md-button>
-                        <md-button class="md-raised" ng-click="">
+                        <md-button class="md-raised" ng-click="closeDialog()">
                             Cancel
                         </md-button>
-                        <md-button type="submit" class="md-raised md-primary" ng-click="">Submit</md-button>
+                        <md-button ng-disabled="userForm.$invalid" type="submit" class="md-raised md-primary">Submit</md-button>
                     </div>
                 </form>
             </div>
