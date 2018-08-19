@@ -3,7 +3,8 @@
 
 <head>
     <title>San Jose City Community</title>
-    <meta content="img/logo_128.png" itemprop="image">
+    <meta content="img/logo.jpeg" itemprop="image">
+    <link href="img/logo.jpeg" rel="icon">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Angular Material style sheet -->
@@ -23,43 +24,25 @@
 </head>
 
 <body ng-controller="index" ng-init="fetchSession()">
-    <!-- Main navigation -->
-    <nav class="navbar navbar-expand-md navbar-dark">
-        <div class="container">
-
-            <!-- Company name shown on mobile -->
-            <a class="navbar-brand" href="#">City of
-                <span>San Jose</span>
-            </a>
-
-            <!-- Mobile menu toggle -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar"
-                aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Main navigation items -->
-            <div class="collapse navbar-collapse" id="mainNavbar">
-                <ul class="navbar-nav mr-auto justify-content-end">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.html">Events
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Reservations</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Donation</a>
-                    </li>
-                </ul>
-
-            </div>
-
-        </div>
-    </nav>
+        <nav class="navbar navbar-expand-md navbar-dark">
+                <div class="container">
+                    <a class="navbar-brand" href="/index.html">
+                        <img ng-src="/img/img9.jpeg" width="300px" height="100px" alt="San Jose Parks, Recreation and Neighborhood services">
+                    </a>
+                    <div>
+                        <md-button class="md-primary md-raised float-right" ng-if="sessionUser == undefined" ng-click="showLogin($event)">
+                            Login
+                        </md-button>
+                        <md-button class="md-primary md-raised" ng-if="sessionUser == undefined" ng-click="showSignUp($event)">
+                            Sign Up
+                        </md-button>
+                        <label ng-if="sessionUser != undefined" >Welcome, <span>{{sessionUser.FirstName}}</span>!</label>
+                        <md-button class="md-primary md-raised" ng-if="sessionUser != undefined" ng-click="logout()">
+                            Logout
+                        </md-button>
+                    </div>
+                </div>
+            </nav>
 
 
     <!-- <md-content class="md-padding" layout-xs="column" layout="row">
