@@ -30,7 +30,7 @@
             </a>
             <md-content style="background-color: rgba(250,250,250,0) !important;" layout-xs="column" layout="row">
                 <form id="searchform">
-                    <md-input-container  style="background-color: rgba(250,250,250,0) !important;">
+                    <md-input-container style="background-color: rgba(250,250,250,0) !important;">
                         <label>Search Events</label>
                         <input ng-model="searchTerm">
                     </md-input-container>
@@ -44,7 +44,8 @@
                 <md-button class="md-primary md-raised" ng-if="sessionUser == undefined" ng-click="showSignUp($event)">
                     Sign Up
                 </md-button>
-                <label ng-if="sessionUser != undefined" >Welcome, <span>{{sessionUser.FirstName}}</span>!</label>
+                <label ng-if="sessionUser != undefined">Welcome,
+                    <span>{{sessionUser.FirstName}}</span>!</label>
                 <md-button class="md-primary md-raised" ng-if="sessionUser != undefined" ng-click="logout()">
                     Logout
                 </md-button>
@@ -71,18 +72,19 @@
     </md-content>
 
     <div ng-if="communityEvents && communityEvents.length>0">
-        <md-content ng-repeat="event in communityEvents" class="md-padding" layout-xs="column" layout="row">
-            <div flex-xs flex-gt-xs="100" layout="column">
+        <md-content class="md-padding" layout-xs="column" layout-sm="column" layout-wrap layout="row">
+            <div flex="25" flex-xs="90" flex-sm="60" ng-repeat="event in communityEvents">
                 <md-card>
+                    <md-card-title-media>
+                        <div class="md-media-lg card-media">
+                            <img ng-src="img/img5.jpeg" class="md-card-image">
+                        </div>
+                    </md-card-title-media>
                     <md-card-title>
                         <md-card-title-text>
                             <span class="md-headline">{{event.EventName}}</span>
-                            Start Date/Time: <span class="md-subhead">{{event.EventDateTimeStart}}</span>
-                            End Date/Time: <span class="md-subhead">{{event.EventDateTimeEnd}}</span>
+                            <span class="md-text">{{event.EventDateTimeStart}}</span>
                         </md-card-title-text>
-                        <md-card-title-media>
-                            <div class="md-media-lg card-media"><img ng-src="img/img5.jpeg" class="md-card-image"></div>
-                        </md-card-title-media>
                     </md-card-title>
                     <md-card-actions layout="row" layout-align="end center">
                         <md-button class="md-raised md-primary">Register</md-button>
