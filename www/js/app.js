@@ -375,12 +375,20 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
 
     }
 
-    $scope.showRegisterPage = function (event) {
+    $scope.showRegisterPage = function (event, ev) {
         $scope.selectedEvent = event;
         localStorageService.set('selectedEvent', null);
         localStorageService.set('selectedEvent', event);
-        $window.location.href = '/registerEvent.html';
-    }
+        $mdDialog.show({
+            controller: 'index',
+            templateUrl: 'registerEvent.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true
+        }).then(function (answer) {
+        }, function () {
+        });
+    };
 
     $scope.registerEvent = function () {
         console.log('Registering for user: ' + $scope.sessionUser.UserId + ', for event: ' + $scope.selectedEvent.EventID);
