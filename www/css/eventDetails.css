@@ -1,0 +1,21 @@
+
+.eventCardPic{
+  width:70%;
+  height:25%;
+  float:left;
+}
+.eventCardContainer {
+    padding-left:5%;
+    padding-right:5%;
+}
+.eventDetailsItem {
+  margin: 2%;
+}
+
+@media (max-width: 992px) {
+  .eventCardPic{
+    width:100%;
+    height:100%;
+    float:none;
+  }
+}
