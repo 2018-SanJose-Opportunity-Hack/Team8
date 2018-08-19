@@ -1,19 +1,12 @@
 var app = angular.module('root', ['ngMaterial']);
 
-app.controller('index', ['$scope', '$http', '$window', function ($scope, $http, $window) {
+app.controller('index', ['$scope', '$http', '$window', '$mdDialog', function ($scope, $http, $window, $mdDialog) {
 
     $scope.title = 'City of San Jose: Parks';
-
-    $scope.user = {
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        password: '',
-        confirmPassword: ''
-    };
-
+    $scope.sessionUser = undefined;
     $scope.communities = [];
+    $scope.communityEvents = [];
+
     var filePath = 'data/communities.json';
     $http.get(filePath).then(function (data) {
         // console.log('DATA: ' + JSON.stringify(data));
@@ -52,7 +45,19 @@ app.controller('index', ['$scope', '$http', '$window', function ($scope, $http, 
         return d;
     }
 
-    $scope.communityEvents = [];
+    $scope.showLogin = function (ev) {
+        $mdDialog.show({
+            controller: 'index',
+            templateUrl: 'login.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true
+        }).then(function (answer) {
+            console.log('You said the information was "' + answer + '".');
+        }, function () {
+            console.log('You cancelled the dialog.');
+        });
+    };
 
     $scope.communitySelected = function (selectedCommunity) {
         console.log('Comunity selected: ' + selectedCommunity);
