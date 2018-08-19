@@ -1,11 +1,15 @@
 var app = angular.module('root', ['ngMaterial']);
 
-app.controller('index', ['$scope', '$http', '$window', '$mdDialog', function ($scope, $http, $window, $mdDialog) {
+app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', function ($scope, $http, $window, $mdDialog, $mdToast) {
 
     $scope.title = 'City of San Jose: Parks';
     $scope.sessionUser = undefined;
     $scope.communities = [];
     $scope.communityEvents = [];
+    $scope.loginLoading = false;
+
+    $scope.loginEmail = undefined;
+    $scope.loginPassword = undefined;
 
     var filePath = 'data/communities.json';
     $http.get(filePath).then(function (data) {
@@ -53,11 +57,59 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', function ($s
             targetEvent: ev,
             clickOutsideToClose: true
         }).then(function (answer) {
-            console.log('You said the information was "' + answer + '".');
         }, function () {
-            console.log('You cancelled the dialog.');
         });
     };
+
+    $scope.showSignUp = function (ev) {
+        $mdDialog.show({
+            controller: 'index',
+            templateUrl: 'signup.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true
+        }).then(function (answer) {
+        }, function () {
+        });
+    };
+
+    $scope.loginAction = function () {
+        console.log('Called Login Action.');
+        reqJson = {
+            "email": $scope.loginEmail,
+            "password": $scope.loginPassword
+        };
+        $scope.loginLoading = true;
+        $http.post('login', reqJson, { headers: { 'Content-Type': 'application/json' } }).then(function (response) {
+            if (response.data.error) {
+                console.log('Error: ' + response.data.error);
+                $scope.sessionUser = undefined;
+                $scope.loginLoading = false;
+            } else {
+                console.log('Login Successful ');
+                $scope.sessionUser = response.data;
+                $scope.loginLoading = false;
+                showToast("Login SuccessFul! Welcome");
+                $mdDialog.hide();
+            }
+        }, function (err) {
+            console.log("Error geting value from the Login API.");
+            $scope.sessionUser = undefined;
+            $scope.loginLoading = false;
+        });
+    };
+
+    $scope.signupAction = function () {
+        console.log('Called Signup Action.');
+        reqJson = {
+
+        };
+        console.log();
+    }
+
+    $scope.closeDialog = function () {
+        $mdDialog.hide();
+    }
 
     $scope.communitySelected = function (selectedCommunity) {
         console.log('Comunity selected: ' + selectedCommunity);
@@ -72,10 +124,14 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', function ($s
         }, function (err) {
             console.log("Error geting value from the community events API.");
         });
-    }
+    };
+
+    var showToast = function (message) {
+        $mdToast.show($mdToast.simple().textContent(message).hideDelay(3000));
+    };
 
     $scope.search = function (term) {
         console.log('Search called for: ' + term);
-    }
+    };
 
 }]);

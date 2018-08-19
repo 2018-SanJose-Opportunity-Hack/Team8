@@ -34,32 +34,34 @@
                 <form name="userForm">
                     <md-input-container class="md-block" flex-gt-sm="">
                         <label>User ID</label>
-                        <input name="email" ng-model="user.email" required="" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/">
-                        <div ng-messages="userForm.name.$error" ng-if="!showHints">
-                            <!-- <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                        <input name="email" ng-model="loginEmail" required minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/">
+                        <div ng-if="userForm.name.$error">
+                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
                                 Your userid is email and must be between 10 and 100 characters long and look like an e-mail address.
-                            </div> -->
+                            </div>
                         </div>
                     </md-input-container>
 
                     <md-input-container class="md-block">
                         <label>Password</label>
-                        <input ng-model="user.password" required="" type="password">
+                        <input ng-model="loginPassword" required type="password">
                     </md-input-container>
-                    <div class="bottom-sheet-demo inset" layout="row" layout-sm="column" layout-align="center" >
+                    <div class="bottom-sheet-demo inset" layout="row" layout-sm="column" layout-align="center">
                         </md-button>
-                        <md-button class="md-raised" ng-click="loginAction()">
+                        <md-button class="md-raised" ng-click="closeDialog()">
                             Cancel
                         </md-button>
-                        <md-button class="md-raised md-primary" ng-click="cancelLogin()">
+                        <md-button ng-disabled="userForm.$invalid" type="submit" class="md-raised md-primary" ng-click="loginAction()">
                             Login
                         </md-button>
                     </div>
-
-        <div class="text-center p-t-12">
-            <span class="txt1">
-                Forgot
-            </span>
+                    <div layout="row" ng-if="loginLoading" layout-sm="column" layout-align="space-around">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
+                    <div class="text-center p-t-12">
+                        <span class="txt1">
+                            Forgot
+                        </span>
                         <a class="txt2" href="#">
                             Username / Password?
                         </a>
