@@ -31,7 +31,7 @@
 <div layout="column" ng-cloak="" class="md-inline-form inputdemoBasicUsage">
     <md-content layout-padding="">
         <div>
-            <form name="userForm" method="POST" action="/signup">
+            <form name="userForm" method="POST" action="/completeRegistration">
 
                 <md-input-container class="md-block" flex-gt-sm="">
                     <label>First name</label>
@@ -61,7 +61,7 @@
 
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>State</label>
-                        <md-select ng-model="user.state">
+                        <md-select ng-model="user.state" name="state">
                             <md-option ng-repeat="state in states" value="{{state.abbrev}}">
                                 {{state.abbrev}}
                             </md-option>
@@ -130,12 +130,12 @@
 
                 <md-input-container class="md-block" flex-gt-sm="">
                     <label>First name</label>
-                    <input ng-model="user.firstName" name="firstname">
+                    <input ng-model="user.firstName" name="emergencyfirstname">
                 </md-input-container>
 
                 <md-input-container class="md-block" flex-gt-sm="">
                     <label>Last Name</label>
-                    <input ng-model="user.lastName" name="lastname">
+                    <input ng-model="user.lastName" name="emergencylastname">
                 </md-input-container>
 
                 <md-input-container class="md-block" flex-gt-sm="">
@@ -160,29 +160,29 @@
                 <div layout-gt-sm="row" class="p-t-12">
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>First name</label>
-                        <input ng-model="firstName" name="firstname">
+                        <input ng-model="firstName" name="parfirstname">
                     </md-input-container>
 
                     <md-input-container class="md-block" flex-gt-sm="">
                         <label>Last Name</label>
-                        <input ng-model="lastName" name="lastname">
+                        <input ng-model="lastName" name="parlastname">
                     </md-input-container>
 
                 </div>
                 <div layout-gt-sm="row">
                     <md-input-container class="md-block">
                         <label>Age</label>
-                        <input ng-model="age" name="age">
+                        <input ng-model="age" name="parage">
                     </md-input-container>
 
                     <md-input-container class="md-block">
                         <label>Gender</label>
-                        <input ng-model="gender" name="gender">
+                        <input ng-model="gender" name="pargender">
                     </md-input-container>
 
                     <md-input-container>
                         <label>Date of Birth</label>
-                        <md-datepicker ng-model="dob"></md-datepicker>
+                        <md-datepicker ng-model="dob" name="dob"></md-datepicker>
                     </md-input-container>
                     <md-input-container>
                         <md-button class="md-raised md-primary" ng-click="addRow()">Add Row</md-button>
