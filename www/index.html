@@ -3,7 +3,8 @@
 
 <head>
     <title>San Jose City Community</title>
-    <meta content="img/logo_128.png" itemprop="image">
+    <meta content="img/logo.jpeg" itemprop="image">
+    <link href="img/logo.jpeg" rel="icon">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Angular Material style sheet -->
@@ -24,12 +25,12 @@
 <body ng-init="fetchSession()" ng-controller="index">
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="/index.html">
                 <img ng-src="/img/img9.jpeg" width="300px" height="100px" alt="San Jose Parks, Recreation and Neighborhood services">
             </a>
             <md-content style="background-color: rgba(250,250,250,0) !important;" layout-xs="column" layout="row">
                 <form id="searchform">
-                    <md-input-container  style="background-color: rgba(250,250,250,0) !important;">
+                    <md-input-container style="background-color: rgba(250,250,250,0) !important;">
                         <label>Search Events</label>
                         <input ng-model="searchTerm">
                     </md-input-container>
@@ -43,7 +44,8 @@
                 <md-button class="md-primary md-raised" ng-if="sessionUser == undefined" ng-click="showSignUp($event)">
                     Sign Up
                 </md-button>
-                <label ng-if="sessionUser != undefined" >Welcome, <span>{{sessionUser.FirstName}}</span>!</label>
+                <label ng-if="sessionUser != undefined">Welcome,
+                    <span>{{sessionUser.FirstName}}</span>!</label>
                 <md-button class="md-primary md-raised" ng-if="sessionUser != undefined" ng-click="logout()">
                     Logout
                 </md-button>
@@ -70,17 +72,19 @@
     </md-content>
 
     <div ng-if="communityEvents && communityEvents.length>0">
-        <md-content ng-repeat="event in communityEvents" class="md-padding" layout-xs="column" layout="row">
-            <div flex-xs flex-gt-xs="50" layout="column">
+        <md-content class="md-padding" layout-xs="column" layout-sm="column" layout-wrap layout="row">
+            <div flex="25" flex-xs="90" flex-sm="60" ng-repeat="event in communityEvents">
                 <md-card>
+                    <md-card-title-media>
+                        <div class="md-media-lg card-media">
+                            <img ng-src="img/img5.jpeg" class="md-card-image">
+                        </div>
+                    </md-card-title-media>
                     <md-card-title>
                         <md-card-title-text>
                             <span class="md-headline">{{event.EventName}}</span>
-                            <span class="md-subhead">{{event.EventName}}</span>
+                            <span class="md-text">{{event.EventDateTimeStart}}</span>
                         </md-card-title-text>
-                        <md-card-title-media>
-                            <div class="md-media-lg card-media"></div>
-                        </md-card-title-media>
                     </md-card-title>
                     <md-card-actions layout="row" layout-align="end center">
                         <md-button class="md-raised md-primary">Register</md-button>
@@ -97,102 +101,27 @@
     </div>
 
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-lists">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm">
-                        <ul>
-                            <li>
-                                <h4>Proin accumsan</h4>
-                            </li>
-                            <li>
-                                <a href="#">Rutrum nulla a ultrices</a>
-                            </li>
-                            <li>
-                                <a href="#">Blandit elementum</a>
-                            </li>
-                            <li>
-                                <a href="#">Proin placerat accumsan</a>
-                            </li>
-                            <li>
-                                <a href="#">Morbi hendrerit libero </a>
-                            </li>
-                            <li>
-                                <a href="#">Curabitur sit amet tellus</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-sm">
-                        <ul>
-                            <li>
-                                <h4>Condimentum</h4>
-                            </li>
-                            <li>
-                                <a href="#">Curabitur sit amet tellus</a>
-                            </li>
-                            <li>
-                                <a href="#">Morbi hendrerit libero </a>
-                            </li>
-                            <li>
-                                <a href="#">Proin placerat accumsan</a>
-                            </li>
-                            <li>
-                                <a href="#">Rutrum nulla a ultrices</a>
-                            </li>
-                            <li>
-                                <a href="#">Cras dictum</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-sm">
-                        <ul>
-                            <li>
-                                <h4>Suspendisse</h4>
-                            </li>
-                            <li>
-                                <a href="#">Morbi hendrerit libero </a>
-                            </li>
-                            <li>
-                                <a href="#">Proin placerat accumsan</a>
-                            </li>
-                            <li>
-                                <a href="#">Rutrum nulla a ultrices</a>
-                            </li>
-                            <li>
-                                <a href="#">Curabitur sit amet tellus</a>
-                            </li>
-                            <li>
-                                <a href="#">Donec in ligula nisl.</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-sm">
-                        <h4>Suspendisse</h4>
-                        <p>Integer mattis blandit turpis, quis rutrum est. Maecenas quis arcu vel felis lobortis iaculis fringilla
-                            at ligula. Nunc dignissim porttitor dolor eget porta.</p>
-
-                        <p class="social-icons">
-                            <a href="#">
-                                <i class="fa fa-facebook fa-2x"></i>
-                            </a>
-                            <a href="#">
-                                <i class="fa fa-twitter fa-2x"></i>
-                            </a>
-                            <a href="#">
-                                <i class="fa fa-youtube fa-2x"></i>
-                            </a>
-                            <a href="#">
-                                <i class="fa fa-instagram fa-2x"></i>
-                            </a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </footer>
+        <!-- Footer -->
+        <footer class="footer">
+                <center>
+                    <div class="footer-lists">
+                            <p class="social-icons">
+                                <a href="#">
+                                    <i class="fa fa-facebook fa-2x"></i>
+                                </a>
+                                <a href="https://twitter.com/sjparksandrec" target='_blank'>
+                                    <i class="fa fa-twitter fa-2x"></i>
+                                </a>
+                                <a href="#">
+                                    <i class="fa fa-youtube fa-2x"></i>
+                                </a>
+                                <a href="#">
+                                    <i class="fa fa-instagram fa-2x"></i>
+                                </a>
+                            </p>
+                        </div>
+                </center>
+            </footer>
 
 
 

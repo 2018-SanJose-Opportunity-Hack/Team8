@@ -3,7 +3,8 @@
 
 <head>
     <title>San Jose City Community</title>
-    <meta content="img/logo_128.png" itemprop="image">
+    <meta content="img/logo.jpeg" itemprop="image">
+    <link href="img/logo.jpeg" rel="icon">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Angular Material style sheet -->
@@ -20,174 +21,95 @@
     <link rel="stylesheet" type="text/css" href="css/eventDetails.css" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript" src="js/app.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css"/>
 </head>
 
 <body ng-init="fetchSession()" ng-controller="index">
-       <!-- Main navigation -->
-       <nav class="navbar navbar-expand-md navbar-dark">
-            <div class="container">
-    
-                <!-- Company name shown on mobile -->
-                <a class="navbar-brand" href="/">
-                        <img ng-src="/img/img9.jpeg" width="300px" height="100px" alt="San Jose Parks, Recreation and Neighborhood services">
-                </a>
-    
-                <!-- Mobile menu toggle -->
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-    
-                <!-- Main navigation items -->
-                <div class="collapse navbar-collapse" id="mainNavbar">
-                    <ul class="navbar-nav mr-auto justify-content-end">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="index.html">Events
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-    
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Reservations</a>
-                        </li>
-    
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Donation</a>
-                        </li>
-                    </ul>
-    
-                </div>
-    
+    <nav class="navbar navbar-expand-md navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/index.html">
+                <img ng-src="/img/img9.jpeg" width="300px" height="100px" alt="San Jose Parks, Recreation and Neighborhood services">
+            </a>
+            <div>
+                <md-button class="md-primary md-raised float-right" ng-if="sessionUser == undefined" ng-click="showLogin($event)">
+                    Login
+                </md-button>
+                <md-button class="md-primary md-raised" ng-if="sessionUser == undefined" ng-click="showSignUp($event)">
+                    Sign Up
+                </md-button>
+                <label ng-if="sessionUser != undefined">Welcome,
+                    <span>{{sessionUser.FirstName}}</span>!</label>
+                <md-button class="md-primary md-raised" ng-if="sessionUser != undefined" ng-click="logout()">
+                    Logout
+                </md-button>
             </div>
-        </nav>
+        </div>
+    </nav>
 
+    <div id="mapid"></div>
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 
-        <md-card class="eventDetailsContainer">
-            <img ng-src="/img/img3.jpeg" class="md-card-image eventDetailsPic" alt="Washed Out">
-            <md-card-title>
-              <md-card-title-text>
-                    <span class="md-headline">{{selectedEvent.EventName}}</span>
-              </md-card-title-text>
-            </md-card-title>
-            <md-card-actions layout="row">
-                    <md-button>Register</md-button>
-                  </md-card-actions>
-            <md-card-content>
-              <p>
-                    <span class="eventDetailsItem">Event Category</span>
-                    <span class="eventDetailsItem">Event Date</span>
-                    <span class="eventDetailsItem">Event Price</span>
-                <br/>
-                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
+    <script>
 
-                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
+        var mymap = L.map('mapid').setView([37.377009, -121.922701], 13);
+    
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+            maxZoom: 18,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+                '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            id: 'mapbox.streets'
+        }).addTo(mymap);
+    
+        L.marker([37.377009, -121.922701]).addTo(mymap)
+            .bindPopup("<a href='http://maps.google.com/maps/place/2211+N+1st+St,+San+Jose,+CA+95131' target='_blank'>Get directions!</a>").openPopup();
 
-              </p>
-            </md-card-content>
-            
-        </md-card>
+        var popup = L.popup();
+    
+        function onMapClick(e) {
+            popup
+                .setLatLng(e.latlng)
+                .setContent("You clicked the map at " + e.latlng.toString())
+                .openOn(mymap);
+        }
+    
+        mymap.on('click', onMapClick);
+        
+    </script>
+    
+    <md-card class="eventDetailsContainer">
+        <img ng-src="/img/img3.jpeg" class="md-card-image eventDetailsPic" alt="Washed Out">
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">{{selectedEvent.EventName}}</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-actions layout="row">
+            <md-button class="md-raised md-primary pull-right">Register</md-button>
+        </md-card-actions>
+        <md-card-content>
+            <p>
+                <label>Category: </label><span class="eventDetailsItem">{{selectedEvent.EventCategory}}</span>
+                <label>Date/Time: </label><span class="eventDetailsItem">{{selectedEvent.EventDateTimeStart}}</span>
+                <label>Price (per person): </label><span class="eventDetailsItem">{{selectedEvent.EventPricePerPerson}}</span>
+                <br> 
+                <span>{{selectedEvent.EventDescription}}</span>
+            </p>
+        </md-card-content>
+
+    </md-card>
 
 
 
         <!-- Footer -->
-    <footer class="footer">
-            <div class="footer-lists">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm">
-                            <ul>
-                                <li>
-                                    <h4>Proin accumsan</h4>
-                                </li>
-                                <li>
-                                    <a href="#">Rutrum nulla a ultrices</a>
-                                </li>
-                                <li>
-                                    <a href="#">Blandit elementum</a>
-                                </li>
-                                <li>
-                                    <a href="#">Proin placerat accumsan</a>
-                                </li>
-                                <li>
-                                    <a href="#">Morbi hendrerit libero </a>
-                                </li>
-                                <li>
-                                    <a href="#">Curabitur sit amet tellus</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-sm">
-                            <ul>
-                                <li>
-                                    <h4>Condimentum</h4>
-                                </li>
-                                <li>
-                                    <a href="#">Curabitur sit amet tellus</a>
-                                </li>
-                                <li>
-                                    <a href="#">Morbi hendrerit libero </a>
-                                </li>
-                                <li>
-                                    <a href="#">Proin placerat accumsan</a>
-                                </li>
-                                <li>
-                                    <a href="#">Rutrum nulla a ultrices</a>
-                                </li>
-                                <li>
-                                    <a href="#">Cras dictum</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-sm">
-                            <ul>
-                                <li>
-                                    <h4>Suspendisse</h4>
-                                </li>
-                                <li>
-                                    <a href="#">Morbi hendrerit libero </a>
-                                </li>
-                                <li>
-                                    <a href="#">Proin placerat accumsan</a>
-                                </li>
-                                <li>
-                                    <a href="#">Rutrum nulla a ultrices</a>
-                                </li>
-                                <li>
-                                    <a href="#">Curabitur sit amet tellus</a>
-                                </li>
-                                <li>
-                                    <a href="#">Donec in ligula nisl.</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-sm">
-                            <h4>Suspendisse</h4>
-                            <p>Integer mattis blandit turpis, quis rutrum est. Maecenas quis arcu vel felis lobortis iaculis fringilla
-                                at ligula. Nunc dignissim porttitor dolor eget porta.</p>
-    
+        <footer class="footer">
+                <center>
+                    <div class="footer-lists">
                             <p class="social-icons">
                                 <a href="#">
                                     <i class="fa fa-facebook fa-2x"></i>
                                 </a>
-                                <a href="#">
+                                <a href="https://twitter.com/sjparksandrec" target='_blank'>
                                     <i class="fa fa-twitter fa-2x"></i>
                                 </a>
                                 <a href="#">
@@ -198,20 +120,8 @@
                                 </a>
                             </p>
                         </div>
-                    </div>
-                </div>
-            </div>
-    
-    
-            <div class="footer-bottom">
-                <p class="text-center">Free Bootstrap Template by
-                    <a href="https://zypopwebtemplates.com/">ZyPop</a>.</p>
-                <p class="text-center">
-                    <a href="#">Back to top</a>
-                </p>
-            </div>
-    
-        </footer>
+                </center>
+            </footer>
 
     <!-- Bootcamp JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
