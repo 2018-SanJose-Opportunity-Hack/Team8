@@ -35,13 +35,11 @@ server.get('/community-events', function (req, res) {
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   
-  var communityCenter = communities.find( function (community) {
-      return communityName === community.CommCenterName;
-  });
-  console.log('The comm center is: ' + JSON.stringify(communityCenter));
-  if(communityCenter) {
+  console.log('The comm center is: ' + JSON.stringify(communityName));
+  var count = 0;
+  if(communityName) {
     var communityCenterEvents = events.filter( function(event) {
-      return event.CCId === communityCenter.CommCenterID;
+      return event.EventCommName === communityName && ++count < 10;
     });
     if(communityCenterEvents) {
       res.status(200).send(communityCenterEvents);
@@ -63,7 +61,7 @@ server.get('/eventDetails', function (req, res) {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   
   var desiredEvent = events.find( function(event) {
-    return event.eventId === eventId;
+    return event.EventID == eventId;
   });
   if(desiredEvent) {
     res.status(200).send(desiredEvent);
@@ -129,6 +127,11 @@ server.post('/mysuggestions', function (req, res) {
 
 /* Basic site search will return events or community centers */
 server.get('/search', function (req, res) {
+
+});
+
+/* Register for an event */
+server.post('/registerForEvent', function (req, res) {
 
 });
 
