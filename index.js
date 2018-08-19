@@ -112,7 +112,61 @@ server.post('/login', function (req, res) {
 
 /* Complete registration for a user by storing all collected data */
 server.post('/completeRegistration', function (req, res) {
+  console.log('POST /completeRegistration called');
+  
+  var userId = req.body.userId;
+  var address1 = req.body.address1;
+  var address2 = req.body.address2;
+  var city = req.body.city;
+  var state = req.body.state;
+  var zip = req.body.zip;
+  var homephone = req.body.homephone;
+  var emergencyname = req.body.emergencyfirstname;
+  var emergencylastname = req.body.emergencylastname;
+  var relationship = req.body.relationship;
+  var parname = req.body.parfirstname;
+  var parlastname = req.body.parlastname;
+  var parage = req.body.parage;
+  var pargender = req.body.gender;
+  var dob = req.body.dob;
 
+  console.log('Param Name: Event ID: ' + userId);
+  var desiredUser = users.find( function(user) {
+    return user.UserId == userId;
+  });
+  if(desiredUser) {
+    for(var i= 0; i< users.length; i++){
+      if(users[i].UserId == userId){
+        users[i].Address1 = address1;
+        users[i].Address2 = address2;
+        users[i].City = city;
+        users[i].State = state;
+        users[i].Zip = zip;
+        users[i].Phones.home = homephone;
+        users[i].EmergencyContacts = users[i].EmergencyContacts || [];
+        var emerlength = users[i].EmergencyContacts.length;
+        users[i].EmergencyContacts[emerlength] = {};
+        users[i].EmergencyContacts[emerlength].FirstName = emergencyname;
+        users[i].EmergencyContacts[emerlength].LastName = emergencylastname;
+        users[i].EmergencyContacts[emerlength].Relationship = relationship;
+        users[i].Participants = users[i].Participants || [];
+        var parlength = users[i].Participants.length;
+        users[i].Participants[parlength] = {};
+        users[i].Participants[parlength].FirstName = parname;
+        users[i].Participants[parlength].LastName  = parlastname;
+        users[i].Participants[parlength].Age  = parage;
+        users[i].Participants[parlength].Gender  = pargender;
+        users[i].Participants[parlength].dateOfBirth = dob;
+        users[i].registrationComplete = "true";
+        console.log(JSON.stringify(users[i]));
+        break;
+       }
+    }
+
+    res.status(200).send({'success': 'Registration Complete.'});
+  } else {
+    res.status(200).send({'error': 'No such User found.'});
+  }
 });
 
 /* Store a user's interests for future use */
@@ -177,11 +231,11 @@ server.get('/search', function (req, res) {
 
 /* Register for an event */
 server.post('/registerForEvent', function (req, res) {
-  console.log('POST /registerForEvent called');
+  console.log('POST /registerForEvent called: req.body: ',req.body);
   var eventId = escape(req.body.eventId);
   var userId = escape(req.body.userId);
 
-  console.log('Param Name: Event ID: ' + userId);
+  console.log('Param Name: Event ID: ' + eventId);
   var desiredEvent = events.find( function(event) {
     return event.EventID == eventId;
   });
@@ -206,3 +260,24 @@ server.post('/registerForEvent', function (req, res) {
   }
 });
 
+//Get Registered Events for user
+server.get('/myregisteredevents', function (req, res) {
+  console.log('GET /myregisteredevents called');
+    var userId = escape(req.query.userId);
+    
+    console.log('userId '+ userId);
+    var count = 0;
+    var desiredUser = users.find(function (user) {
+        return user.UserId == userId;
+    });
+    var registeredEvents = desiredUser.registeredEvents || [];
+    var searchMatchingEvents = events.filter( function(event) {
+      return event.EventID == registeredEvents[0];
+    });
+    console.log("registered events: ",registeredEvents)
+    if(searchMatchingEvents) {
+      res.status(200).send(searchMatchingEvents);
+    } else {
+      res.status(200).send({'error': 'Sorry, couldn\'t find any registered events.'});
+    } 
+});
