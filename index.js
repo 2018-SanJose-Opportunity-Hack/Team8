@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 9000;
 
 var users = require(__dirname + '/www/data/Users.json');
 var communities = require(__dirname + '/www/data/communities.json');
