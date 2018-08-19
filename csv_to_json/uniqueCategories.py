@@ -21,7 +21,7 @@ with open("categories.json", "w") as f:
         print(f'{randomint}')
         myobj = {
             'category': v, 
-            'img': f'./img/img{randomint}.jpeg'}
+            'img': f'./img/icons/img{randomint}.jpeg'}
         list_items.append(myobj)
     out = json.dumps(list_items)
     

@@ -230,7 +230,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
     // Categories
     //$scope.items = [{"category":"sports", "img":"./img/img3.jpeg"}, {"category":"dance", "img":"./img/img3.jpeg"}, {"category":"arts", "img":"./img/img3.jpeg"}];
     $scope.items = []
-    $http.get('data/categories2.json').then(function (response) {
+    $http.get('data/categories3.json').then(function (response) {
         console.log('DATA: ' + JSON.stringify(response.data[0]));
         $scope.items = response.data;
     }, function (err) {

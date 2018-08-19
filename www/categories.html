@@ -208,8 +208,8 @@
                   -->
                 <fieldset class="standard" style="border-top: 0">
                      <!-- <legend>Using &lt;md-checkbox&gt; with &lt;ng-checked&gt; </legend> -->
-                    <div layout="row" layout-xs="column" layout-sm="column" layout-wrap flex>
-                        <div flex="25" flex-xs="90" width-sm="70" ng-repeat="item in items">
+                    <div layout="row" layout-xs="column" layout-sm="row" layout-wrap flex>
+                        <div flex="20" flex-xs="90" width-sm="70" ng-repeat="item in items">
                             <md-card>
                                 <!-- <md-card-header>
                                     <md-card-avatar>
@@ -220,14 +220,14 @@
                                         <span class="md-subhead">Material</span>
                                     </md-card-header-text>
                                 </md-card-header> -->
-                                <img ng-src="{{item.img}}" class="md-card-image" alt="Washed Out">
+                                <img ng-src="{{item.img}}" layout="center center" style="max-width: 180px; max-height: 180px" class="md-card-image" alt="Washed Out">
                                 
                                 <md-checkbox  style="margin-left: 10px; margin-bottom: 0px" ng-checked="exists(item, selectedInterests)" ng-click="toggle(item, selectedInterests)">
-                                    <md-card-title>
-                                            <md-card-title-text>
+                                    <!-- <md-card-title> -->
+                                            <md-card-content>
                                                 <span class="md-headline">{{ item.category }}</span>
-                                            </md-card-title-text>
-                                    </md-card-title>
+                                            </md-card-content>
+                                    <!-- </md-card-title> -->
                                     <!-- <span ng-if="exists(item, selected)">selected</span> -->
                                 </md-checkbox>
                             </md-card>
