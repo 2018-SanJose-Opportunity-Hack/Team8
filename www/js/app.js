@@ -28,6 +28,8 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         $scope.selectedCommunity = localStorageService.get('selectedCommunity');
         $scope.recToggle = false;
 
+        $scope.registeredEvents = localStorageService.get('registeredEvents');
+
         var invalidAuthPage = $window.location.href.includes('/login.html') || $window.location.href.includes('/signup.html');
         if (invalidAuthPage) {
             $window.location.href = '/index.html';
@@ -461,8 +463,10 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
             console.log("RESPONSE DATA: ",response.data)
             localStorageService.set('registeredEvents', null);
             localStorageService.set('registeredEvents', response.data);
+            $window.location.href = '/eventsRegistered.html';
         }, function (err) {
             console.log("Error geting value from the community events API.");
+            showToast('No registered events found!');
         });
 
         // if (btnState == true) {
