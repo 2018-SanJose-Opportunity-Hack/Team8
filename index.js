@@ -26,6 +26,7 @@ server.get('/ping', function (req, res) {
   res.status(200).send('Success');
 });
 
+/* For getting all events for a particular community center */
 server.get('/community-events', function (req, res) {
   console.log('GET /community-events called');
   var communityName = unescape(req.query.communityName);
@@ -52,6 +53,7 @@ server.get('/community-events', function (req, res) {
   }
 });
 
+/* For getting details of a specific event */
 server.get('/eventDetails', function (req, res) {
   console.log('GET /eventDetails called');
   var eventId = escape(req.query.id);
@@ -69,3 +71,43 @@ server.get('/eventDetails', function (req, res) {
     res.status(404).send({'error': 'No such event found.'});
   }
 });
+
+/* Basic signup for a user */
+server.post('/signup', function (req, res){
+  console.log('POST /signup called');
+  var firstname = escape(req.body.firstname);
+  var lastname = escape(req.body.lastname);
+  var email = escape(req.body.email);
+  var password = escape(req.body.password);
+  var newUserId = 1000 + Math.floor(Math.random()*8000)+'';
+  console.log('new User Details '+ firstname+ ' '+ lastname);
+  var newUser = {
+    'UserId': newUserId,
+    'FirstName': firstname,
+    'LastName': lastname,
+    'email': email,
+    'password': password,
+    'registrationComplete': 'false'
+  };
+  var length = users.length;
+  users[length+1] = newUser;
+  res.status(200).send({'success':'Sign Up complete!'});
+
+});
+
+/* Basic Log in for a user */
+server.post('/login', function (req, res) {
+  console.log('POST /login called');
+  var email = escape(req.body.email);
+  var password = escape(req.body.password);
+
+  var isLoggedIn = users.find( function(user) {
+    return user.email === email && user.password === password;
+  });
+  if(isLoggedIn) {
+    res.status(200).send({'success':'Login Successful'});
+  } else {
+    res.status(404).send({'error': 'Invalid credentials. Please try again'});
+  }
+});
+
