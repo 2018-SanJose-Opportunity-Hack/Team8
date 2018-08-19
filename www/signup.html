@@ -28,33 +28,33 @@
     <div layout="column" ng-cloak="" class="md-inline-form inputdemoBasicUsage">
         <md-content layout-padding="">
             <div>
-                <form name="userForm">
+                <form name="userForm" method="POST" action="/signup">
 
                     <md-input-container class="md-block" flex-gt-sm="">
                         <label>First name</label>
-                        <input ng-model="user.firstName">
+                        <input ng-model="user.firstName" name="firstname">
                     </md-input-container>
 
                     <md-input-container class="md-block" flex-gt-sm="">
                         <label>Last Name</label>
-                        <input ng-model="user.lastName">
+                        <input ng-model="user.lastName" name="lastname">
                     </md-input-container>
 
                     <md-input-container class="md-block">
                         <label>Email Address (User ID)</label>
-                        <input ng-model="user.email" type="email">
+                        <input ng-model="user.email" type="email" name="email">
                     </md-input-container>
 
                     <md-input-container class="md-block">
                         <label>Password</label>
-                        <input ng-model="user.password" type="password">
+                        <input ng-model="user.password" type="password" name="password">
                     </md-input-container>
 
                     <md-input-container class="md-block">
                         <label>Confirm password</label>
                         <input ng-model="user.confirmPassword" type="password">
                     </md-input-container>
-
+                    <md-button type="submit" class="md-raised md-primary">Primary</md-button>
                 </form>
             </div>
         </md-content>

@@ -9,15 +9,14 @@
       "City": "San Jose",
       "State": "CA",
       "Zip": "95131",
+      "registrationComplete": "true",
       "Phones": {
         "home": "123-456-789",
         "mobile": "123-456-789"
       },
       "Gender": "male",
-      "email": [
-        "pavank1@test.com",
-        "pavank2@test.org"
-      ],
+      "email": "pavank1@test.com",
+      "password": "HelloWorld1",
       "dateOfBirth": "1990-01-01T00:00:00.000Z",
       "isTextMsg": true,
       "Carrier": "att",
@@ -78,15 +77,14 @@
       "City": "San Jose",
       "State": "CA",
       "Zip": "95131",
+      "registrationComplete": "true",
       "Phones": {
         "home": "123-456-789",
         "mobile": "123-456-789"
       },
       "Gender": "male",
-      "email": [
-        "khantilc1@test.com",
-        "khantilc2@test.org"
-      ],
+      "email": "khantilc1@test.com",
+      "password": "HelloWorld2",
       "dateOfBirth": "1990-01-01T00:00:00.000Z",
       "isTextMsg": true,
       "Carrier": "att",
@@ -138,15 +136,14 @@
       "City": "San Jose",
       "State": "CA",
       "Zip": "95131",
+      "registrationComplete": "false",
       "Phones": {
         "home": "123-456-789",
         "mobile": "123-456-789"
       },
       "Gender": "female",
-      "email": [
-        "sayleec1@test.com",
-        "sayleec1@test.org"
-      ],
+      "email": "sayleec1@test.com",
+      "password": "HelloWorld3",
       "dateOfBirth": "1990-01-01T00:00:00.000Z",
       "isTextMsg": true,
       "Carrier": "att",
@@ -197,15 +194,14 @@
       "City": "San Jose",
       "State": "CA",
       "Zip": "95131",
+      "registrationComplete": "false",
       "Phones": {
         "home": "123-456-789",
         "mobile": "123-456-789"
       },
       "Gender": "male",
-      "email": [
-        "acuba1@test.com",
-        "acuba2@test.org"
-      ],
+      "email": "acuba1@test.com",
+      "password": "HelloWorld4",
       "dateOfBirth": "1990-01-01T00:00:00.000Z",
       "isTextMsg": true,
       "Carrier": "att",
