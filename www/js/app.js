@@ -26,16 +26,16 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         if (navigator.geolocation) {
             console.log('geolocation available.');
             navigator.geolocation.getCurrentPosition(function (position) {
-                $scope.$apply(function () {
+                // $scope.$apply(function () {
                     $scope.position = { 'latitude': position.coords.latitude, 'longitude': position.coords.longitude };
                     console.log('Dummy distance: ' + calculatedistance(position.coords.latitude, position.coords.latitude + 10, position.coords.longitude, position.coords.longitude + 10) + ' meters');
-                });
+                // });
             });
         } else {
             console.log('no geolocation');
-            $scope.$apply(function () {
+            // $scope.$apply(function () {
                 $scope.position = 'no geolocation available!';
-            });
+            // });
         }
     }
 
@@ -84,6 +84,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
             if (response.data.error) {
                 console.log('Error: ' + response.data.error);
                 $scope.sessionUser = undefined;
+                showToast(response.data.error);
                 $scope.loginLoading = false;
             } else {
                 console.log('Login Successful ');
@@ -95,6 +96,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         }, function (err) {
             console.log("Error geting value from the Login API.");
             $scope.sessionUser = undefined;
+            showToast("Error Calling API.");
             $scope.loginLoading = false;
         });
     };
@@ -119,8 +121,9 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
     loadCommunityEvents = function (selectedCommunity) {
         console.log('Loading the community Events for community: ' + selectedCommunity);
         $http.get('community-events?communityName=' + selectedCommunity).then(function (data) {
-            // console.log('DATA: ' + JSON.stringify(data));
-            $scope.communityEvents = data.data;
+            // $scope.$apply(function () {
+                $scope.communityEvents = data.data;
+            // });
         }, function (err) {
             console.log("Error geting value from the community events API.");
         });
@@ -130,8 +133,15 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         $mdToast.show($mdToast.simple().textContent(message).hideDelay(3000));
     };
 
-    $scope.search = function (term) {
+    $scope.searchEvent = function (term) {
         console.log('Search called for: ' + term);
+        $http.get('search?term=' + term).then(function (data) {
+            $scope.$apply(function () {
+                $scope.communityEvents = data.data;
+            });
+        }, function (err) {
+            console.log("Error geting value from the community events API.");
+        });
     };
 
 }]);
