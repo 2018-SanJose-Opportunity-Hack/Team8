@@ -57,7 +57,7 @@
     <label hidden="true">Location is: </label>
     <span>{{position}}</span> -->
 
-    <md-content class="md-padding" layout-xs="column" layout="row">
+    <md-content layout-xs="column" layout="row">
         <md-input-container>
             <label>Communities</label>
             <md-select ng-model="selectedCommunity" ng-change="communitySelected(selectedCommunity)">
@@ -66,10 +66,15 @@
                 </md-option>
             </md-select>
         </md-input-container>
-        <md-button class="md-raised md-primary">Filter
-            <i class="fas fa-filter"></i>
+        <md-button class="md-primary" ng-click="filter()">Filter
+        </md-button>
+        <md-switch ng-if="sessionUser != undefined" ng-model="recToggle" aria-label="Recommended Events" ng-change="showReceommendedEvents(recToggle)">
+            Recommended Events
+        </md-switch>
+        <md-button ng-if="sessionUser != undefined" ng-click="showRegisteredEvents()" class="md-primary">Registered Event
         </md-button>
     </md-content>
+   
 
     <div ng-if="communityEvents && communityEvents.length>0">
         <md-content class="md-padding" layout-xs="column" layout-sm="column" layout-wrap layout="row">
@@ -77,7 +82,7 @@
                 <md-card>
                     <md-card-title-media>
                         <div class="md-media-lg card-media">
-                            <img ng-src="img/img5.jpeg" class="md-card-image">
+                            <img ng-src="{{event.img}}" class="md-card-image">
                         </div>
                     </md-card-title-media>
                     <md-card-title>
@@ -87,7 +92,7 @@
                         </md-card-title-text>
                     </md-card-title>
                     <md-card-actions layout="row" layout-align="end center">
-                        <md-button class="md-raised md-primary">Register</md-button>
+                        <md-button class="md-raised md-primary" ng-click="showRegisterPage(event)">Register</md-button>
                         <md-button class="md-raised md-primary" ng-click="showDetails(event)">View Details</md-button>
                     </md-card-actions>
                 </md-card>
