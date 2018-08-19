@@ -13,6 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-messages.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+    <script src="/node_modules/angular-local-storage/src/angular-local-storage.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -20,7 +21,7 @@
     <script type="text/javascript" src="js/app.js"></script>
 </head>
 
-<body ng-controller="index">
+<body ng-init="fetchSession()" ng-controller="index">
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="/">
@@ -29,7 +30,7 @@
             <md-content style="background-color: rgba(250,250,250,0) !important;" layout-xs="column" layout="row">
                 <form id="searchform">
                     <md-input-container  style="background-color: rgba(250,250,250,0) !important;">
-                        <label>Search</label>
+                        <label>Search Events</label>
                         <input ng-model="searchTerm">
                     </md-input-container>
                     <md-button class="md-raised md-primary" ng-click="searchEvent(searchTerm)" ng-disabled="searchTerm == undefined || searchTerm.length <= 0">Search</md-button>
@@ -41,6 +42,10 @@
                 </md-button>
                 <md-button class="md-primary md-raised" ng-if="sessionUser == undefined" ng-click="showSignUp($event)">
                     Sign Up
+                </md-button>
+                <label ng-if="sessionUser != undefined" >Welcome, <span>{{sessionUser.FirstName}}</span>!</label>
+                <md-button class="md-primary md-raised" ng-if="sessionUser != undefined" ng-click="logout()">
+                    Logout
                 </md-button>
             </div>
         </div>
@@ -79,7 +84,7 @@
                     </md-card-title>
                     <md-card-actions layout="row" layout-align="end center">
                         <md-button class="md-raised md-primary">Register</md-button>
-                        <md-button class="md-raised md-primary">View Details</md-button>
+                        <md-button class="md-raised md-primary" ng-click="showDetails(event)">View Details</md-button>
                     </md-card-actions>
                 </md-card>
             </div>
