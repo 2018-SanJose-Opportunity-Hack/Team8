@@ -72,15 +72,16 @@
 
     <div ng-if="communityEvents && communityEvents.length>0">
         <md-content ng-repeat="event in communityEvents" class="md-padding" layout-xs="column" layout="row">
-            <div flex-xs flex-gt-xs="50" layout="column">
+            <div flex-xs flex-gt-xs="100" layout="column">
                 <md-card>
                     <md-card-title>
                         <md-card-title-text>
                             <span class="md-headline">{{event.EventName}}</span>
-                            <span class="md-subhead">{{event.EventName}}</span>
+                            Start Date/Time: <span class="md-subhead">{{event.EventDateTimeStart}}</span>
+                            End Date/Time: <span class="md-subhead">{{event.EventDateTimeEnd}}</span>
                         </md-card-title-text>
                         <md-card-title-media>
-                            <div class="md-media-lg card-media"></div>
+                            <div class="md-media-lg card-media"><img ng-src="img/img5.jpeg" class="md-card-image"></div>
                         </md-card-title-media>
                     </md-card-title>
                     <md-card-actions layout="row" layout-align="end center">
