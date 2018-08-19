@@ -9,6 +9,7 @@
     "State": "CA",
     "Zip": "95131",
     "registrationComplete": "true",
+    "interests": ["dance", "drawing"],
     "Phones": {
       "home": "123-456-789",
       "mobile": "123-456-789"
@@ -77,6 +78,7 @@
     "State": "CA",
     "Zip": "95131",
     "registrationComplete": "true",
+    "interests": ["music", "drawing"],
     "Phones": {
       "home": "123-456-789",
       "mobile": "123-456-789"
@@ -136,6 +138,7 @@
     "State": "CA",
     "Zip": "95131",
     "registrationComplete": "false",
+    "interests": ["dance", "drawing", "soccer"],
     "Phones": {
       "home": "123-456-789",
       "mobile": "123-456-789"
@@ -194,6 +197,7 @@
     "State": "CA",
     "Zip": "95131",
     "registrationComplete": "false",
+    "interests": ["dance", "music", "soccer", "cuisine"],
     "Phones": {
       "home": "123-456-789",
       "mobile": "123-456-789"

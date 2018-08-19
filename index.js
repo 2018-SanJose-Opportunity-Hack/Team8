@@ -122,7 +122,23 @@ server.post('/myinterests', function (req, res) {
 
 /* Get suggested events for a user */
 server.post('/mysuggestions', function (req, res) {
-
+  console.log('POST /mysuggestions called');
+    var userId = escape(req.body.userId);
+    var communityName = req.body.communityName;
+    console.log('userId '+ userId + ' community Name: '+ communityName);
+    var count = 0;
+    var desiredUser = users.find(function (user) {
+        return user.UserId == userId;
+    });
+    var userInterests = desiredUser.interests || [];
+    var searchMatchingEvents = events.filter( function(event) {
+      return event.EventCommName == communityName && userInterests.some(v => event.EventName.toLowerCase().includes(v.toLowerCase())) && ++count < 10;
+    });
+    if(searchMatchingEvents) {
+      res.status(200).send(searchMatchingEvents);
+    } else {
+      res.status(200).send({'error': 'Sorry, couldn\'t find any results.'});
+    } 
 });
 
 /* Basic site search will return events or community centers */
