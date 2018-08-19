@@ -270,7 +270,7 @@ server.get('/myregisteredevents', function (req, res) {
     var desiredUser = users.find(function (user) {
         return user.UserId == userId;
     });
-    var registeredEvents = desiredUser.registeredEvents || [];
+    var registeredEvents = desiredUser.EventsRegistered || [];
     var searchMatchingEvents = events.filter( function(event) {
       return event.EventID == registeredEvents[0];
     });

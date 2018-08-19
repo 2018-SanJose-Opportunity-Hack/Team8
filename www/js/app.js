@@ -6,6 +6,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
     $scope.sessionUser = undefined;
     $scope.communities = [];
     $scope.communityEvents = [];
+    $scope.registeredEvents = [];
     $scope.loginLoading = false;
     $scope.signupLoading = false;
     $scope.selectedEvent = undefined;
@@ -412,5 +413,94 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
             showToast("Error Calling Login API.");
         });
     }
+
+
+    $scope.showParticipants = function(ev) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        // Modal dialogs should fully cover application
+        // to prevent interaction outside of dialog
+        $scope.selectedEvent = ev;
+        localStorageService.set('selectedEvent', null);
+        localStorageService.set('selectedEvent', event);
+        var pts = '';
+        console.log($scope.sessionUser);
+
+        var i;
+        for (i = 0; i < $scope.sessionUser.EventsRegistered.length; i++) {
+            if(ev.EventID == $scope.sessionUser.EventsRegistered[i]){
+                pts = pts+$scope.sessionUser.FirstName+' '+$scope.sessionUser.LastName;
+                console.log(pts);
+            }
+        }
+
+        var j
+        for (j=0; j <  $scope.sessionUser.Participants.length; j++) {
+            for (i = 0; i < $scope.sessionUser.Participants[j].EventsRegistered.length; i++) {
+            if(ev.EventID == $scope.sessionUser.Participants[j].EventsRegistered[i]){
+                pts = pts+"\n\n"+$scope.sessionUser.Participants[j].FirstName+' '+$scope.sessionUser.Participants[j].LastName;
+                console.log(pts);
+            }
+        }
+        }
+        $mdDialog.show(
+            $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#popupContainer')))
+                .clickOutsideToClose(true)
+                .title('Participants going to the '+ev.EventName+' Event...')
+                .textContent(pts)
+                .ariaLabel('Alert Dialog Demo')
+                .ok('Got it!')
+                .targetEvent(ev)
+        );
+    };
+
+
+    $scope.showRegisteredEvents = function () {
+        $http.get('myregisteredevents?userId=' + $scope.sessionUser.UserId).then(function (response) {
+            $scope.registeredEvents = response.data;
+            console.log("RESPONSE DATA: ",response.data)
+            localStorageService.set('registeredEvents', null);
+            localStorageService.set('registeredEvents', response.data);
+        }, function (err) {
+            console.log("Error geting value from the community events API.");
+        });
+
+        // if (btnState == true) {
+        //     console.log('Fetching suggestions for user: ' + $scope.sessionUser.UserId);
+        //     var reqJson = {
+        //         "userId": $scope.sessionUser.UserId,
+        //         "communityName": $scope.selectedCommunity
+        //     }
+        //     $http.post('mysuggestions', reqJson, { headers: { 'Content-Type': 'application/json' } }).then(function (response) {
+        //         if (response.data.error) {
+        //             console.log('Error: ' + response.data.error);
+        //             $scope.communityEvents = undefined;
+        //             localStorageService.set('communityEvents', null);
+        //             showToast(response.data.error);
+        //         } else {
+        //             console.log('Fetched suggested events.');
+        //             $scope.communityEvents = response.data;
+        //             localStorageService.set('communityEvents', null);
+        //             localStorageService.set('communityEvents', response.data);
+        //         }
+        //     }, function (err) {
+        //         console.log("Error geting value from the Login API.");
+        //         $scope.communityEvents = undefined;
+        //         localStorageService.set('communityEvents', null);
+        //         showToast("Error Calling Login API.");
+        //     });
+        // } else {
+        //     console.log('Fetching all events for community: ' + $scope.selectedCommunity);
+        //     $http.get('community-events?communityName=' + $scope.selectedCommunity).then(function (response) {
+        //         $scope.communityEvents = response.data;
+        //         localStorageService.set('communityEvents', null);
+        //         localStorageService.set('communityEvents', response.data);
+        //     }, function (err) {
+        //         console.log("Error geting value from the community events API.");
+        //     });
+        // }
+
+    }
+
 
 }]);
