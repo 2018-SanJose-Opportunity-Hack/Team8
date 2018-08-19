@@ -223,7 +223,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
     // Categories
     //$scope.items = [{"category":"sports", "img":"./img/img3.jpeg"}, {"category":"dance", "img":"./img/img3.jpeg"}, {"category":"arts", "img":"./img/img3.jpeg"}];
     $scope.items = []
-    $http.get('data/categories.json').then(function (response) {
+    $http.get('data/categories2.json').then(function (response) {
         console.log('DATA: ' + JSON.stringify(response.data[0]));
         $scope.items = response.data;
     }, function (err) {
@@ -247,31 +247,32 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
 
     $scope.addInterests = function () {
         console.log('Add interests called.');
+        selectedInterestsName = [];
+        angular.forEach($scope.selectedInterests, function(selectedInterest){
+            console.log("SelectedInterest: ",selectedInterest.category);
+            selectedInterestsName.push(selectedInterest.category);
+        });
+        console.log("selectedInterests: "+selectedInterestsName);
+
         reqJson = {
             "userId": $scope.loginEmail,
-            "interests": $scope.selected
+            "interests": selectedInterestsName
         };
-        $scope.loginLoading = true;
-        $http.post('login', reqJson, { headers: { 'Content-Type': 'application/json' } }).then(function (response) {
+        
+        $http.post('myinterests', reqJson, { headers: { 'Content-Type': 'application/json' } }).then(function (response) {
             if (response.data.error) {
                 console.log('Error: ' + response.data.error);
-                $scope.sessionUser = undefined;
                 showToast(response.data.error);
-                $scope.loginLoading = false;
             } else {
                 console.log('Login Successful ');
-                $scope.sessionUser = response.data;
-                $scope.loginLoading = false;
-                showToast("Login SuccessFul! Welcome");
-                $mdDialog.hide();
+                showToast("Saved Interests");
             }
         }, function (err) {
-            console.log("Error geting value from the Login API.");
-            $scope.sessionUser = undefined;
-            showToast("Error Calling API.");
-            $scope.loginLoading = false;
+            console.log("Error geting value from the MyInterests API.");
+            showToast("Error saving your interests.");
         });
     };
+
     $scope.showDetails = function (event) {
         console.log('showing details for event: ' + JSON.stringify(event));
         $scope.selectedEvent = event;
