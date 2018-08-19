@@ -21,50 +21,34 @@
 </head>
 
 <body ng-controller="index">
-    <!-- Main navigation -->
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container">
-            <!-- Company name shown on mobile -->
             <a class="navbar-brand" href="/">
                 <img ng-src="/img/img9.jpeg" width="300px" height="100px" alt="San Jose Parks, Recreation and Neighborhood services">
             </a>
-            <!-- Mobile menu toggle -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar"
-                aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Main navigation items -->
-            <div class="collapse navbar-collapse" id="mainNavbar">
-                <ul class="navbar-nav mr-auto justify-content-end">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.html">Events
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Reservations</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Donation</a>
-                    </li>
-                </ul>
+            <md-content style="background-color: rgba(250,250,250,0) !important;" layout-xs="column" layout="row">
+                <form id="searchform">
+                    <md-input-container  style="background-color: rgba(250,250,250,0) !important;">
+                        <label>Search</label>
+                        <input ng-model="searchTerm">
+                    </md-input-container>
+                    <md-button class="md-raised md-primary" ng-click="search(searchTerm)" ng-disabled="searchTerm == undefined || searchTerm.length <= 0">Search</md-button>
+                </form>
+            </md-content>
+            <div>
+                <md-button class="md-primary md-raised float-right" ng-if="sessionUser == undefined" ng-click="showLogin($event)">
+                    Login
+                </md-button>
+                <md-button class="md-primary md-raised" ng-if="sessionUser == undefined" ng-click="showSignUp($event)">
+                    Sign Up
+                </md-button>
             </div>
         </div>
     </nav>
 
-    <md-content class="md-padding float-right" layout-xs="column" layout="row">
-        <form id="searchform">
-            <md-input-container>
-                <label>Search</label>
-                <input ng-model="searchTerm">
-            </md-input-container>
-            <md-button class="md-raised md-primary" ng-click="search(searchTerm)" ng-disabled="searchTerm == undefined || searchTerm.length <= 0">Search</md-button>
-        </form>
-    </md-content>
-
-    <md-button class="md-raised md-primary" ng-click="getLocation()">Get Location</md-button>
+    <!-- <md-button class="md-raised md-primary" ng-click="getLocation()">Get Location</md-button>
     <label hidden="true">Location is: </label>
-    <span>{{position}}</span>
+    <span>{{position}}</span> -->
 
     <md-content class="md-padding" layout-xs="column" layout="row">
         <md-input-container>
