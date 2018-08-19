@@ -16,6 +16,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
     $scope.signupLastName = undefined;
     $scope.signupEmail = undefined;
     $scope.signupPassword = undefined;
+    $scope.recToggle = false;
 
 
     $scope.fetchSession = function () {
@@ -24,6 +25,7 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         $scope.communityEvents = localStorageService.get('communityEvents');
         $scope.selectedEvent = localStorageService.get('selectedEvent');
         $scope.selectedCommunity = localStorageService.get('selectedCommunity');
+        $scope.recToggle = false;
 
         var invalidAuthPage = $window.location.href.includes('/login.html') || $window.location.href.includes('/signup.html');
         if (invalidAuthPage) {
@@ -190,6 +192,10 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
 
     $scope.communitySelected = function (selectedCommunity) {
         console.log('Comunity selected: ' + selectedCommunity);
+        $scope.recToggle = false;
+        $scope.selectedCommunity = selectedCommunity;
+        localStorageService.set('selectedCommunity', null);
+        localStorageService.set('selectedCommunity', selectedCommunity);
         loadCommunityEvents(selectedCommunity);
     };
 
@@ -330,12 +336,43 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         $scope.participantArray = arrParticipant;
     };
 
-    $scope.fetchUserSuggestions = function () {
-        console.log('Fetching suggestions for user: ' + sessionUser.UserId + ', for community: ' + selectedCommunity.CommCenterName);
-        var reqJson = {
-            "userId": sessionUser.UserId,
-            "communityName": selectedCommunity.CommCenterName
+    $scope.showReceommendedEvents = function (btnState) {
+        if (btnState ==true) {
+            console.log($scope.selectedCommunity);
+            console.log('Fetching suggestions for user: ' + $scope.sessionUser.UserId + ', for community: ' + $scope.selectedCommunity);
+            var reqJson = {
+                "userId": $scope.sessionUser.UserId,
+                "communityName": $scope.selectedCommunity
+            }
+            $http.post('mysuggestions', reqJson, { headers: { 'Content-Type': 'application/json' } }).then(function (response) {
+                if (response.data.error) {
+                    console.log('Error: ' + response.data.error);
+                    $scope.communityEvents = undefined;
+                    localStorageService.set('communityEvents', null);
+                    showToast(response.data.error);
+                } else {
+                    console.log('Fetched suggested events.');
+                    $scope.communityEvents = response.data;
+                    localStorageService.set('communityEvents', null);
+                    localStorageService.set('communityEvents', response.data);
+                }
+            }, function (err) {
+                console.log("Error geting value from the Login API.");
+                $scope.communityEvents = undefined;
+                localStorageService.set('communityEvents', null);
+                showToast("Error Calling Login API.");
+            });
+        }  else {
+            console.log('Fetching all events for community: ' + $scope.selectedCommunity);
+            $http.get('community-events?communityName=' + $scope.selectedCommunity).then(function (response) {
+                $scope.communityEvents = response.data;
+                localStorageService.set('communityEvents', null);
+                localStorageService.set('communityEvents', response.data);
+            }, function (err) {
+                console.log("Error geting value from the community events API.");
+            });
         }
+        
     }
 
 }]);
