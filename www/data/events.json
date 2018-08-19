@@ -1,0 +1,16 @@
+[
+    {
+        "eventId": "ABC1",
+        "eventName": "ABC event",
+        "CCId": "6445 Camden Ave.",
+        "Ages": "20-35",
+        "Gender": "All"
+    },
+    {
+        "eventId": "PQR2",
+        "eventName": "XYZ event",
+        "CCId": "1980 Camden Ave.",
+        "Ages": "<15",
+        "Gender": "Female"
+    }
+]
