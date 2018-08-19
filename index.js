@@ -12,7 +12,7 @@ var port = process.env.PORT || 9000;
 
 var users = require(__dirname + '/www/data/Users.json');
 var communities = require(__dirname + '/www/data/communities.json');
-var events = require(__dirname + '/www/data/events.json');
+var events = require(__dirname + '/www/data/envents2.json');
 
 var app = server.listen(port, function () {
   console.log('server listening on port ' + port);
