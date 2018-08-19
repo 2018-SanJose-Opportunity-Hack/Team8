@@ -28,9 +28,22 @@
         <div class="container">
 
             <!-- Company name shown on mobile -->
-            <a class="navbar-brand" href="#">City of
-                <span>San Jose</span>
+            <a class="navbar-brand" href="#">
+                    <img ng-src="/img/img9.jpeg" width="300px" height="100px" alt="San Jose Parks, Recreation and Neighborhood services">
             </a>
+            
+            <div>
+                <md-button class="md-primary md-raised float-right" ng-if="sessionUser == undefined" ng-click="showLogin($event)">
+                    Login
+                </md-button>
+                <md-button class="md-primary md-raised" ng-if="sessionUser == undefined" ng-click="showSignUp($event)">
+                    Sign Up
+                </md-button>
+                <label ng-if="sessionUser != undefined" >Welcome, <span>{{sessionUser.FirstName}}</span>!</label>
+                <md-button class="md-primary md-raised" ng-if="sessionUser != undefined" ng-click="logout()">
+                    Logout
+                </md-button>
+            </div>
 
             <!-- Mobile menu toggle -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar"
@@ -39,7 +52,7 @@
             </button>
 
             <!-- Main navigation items -->
-            <div class="collapse navbar-collapse" id="mainNavbar">
+            <!-- <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav mr-auto justify-content-end">
                     <li class="nav-item active">
                         <a class="nav-link" href="index.html">Events
@@ -56,7 +69,7 @@
                     </li>
                 </ul>
 
-            </div>
+            </div> -->
 
         </div>
     </nav>
@@ -181,9 +194,11 @@
 
     <!-- <div ng-controller="AppCtrl" class="md-padding" ng-cloak style="min-height:270px"> -->
     <div layout="row" layout-wrap class="md-padding" ng-cloak style="min-height:270px">
-        <h2>Select your interests</h2>
-        <br/>
-        <h4>Choose at least three interests for you and your kids, parents for better experience</h4>
+        <div layout="column">
+                <h2>Select your interests</h2>
+                <h5>Choose at least three interests for you and your family for better experience</h5>
+        </div>
+
         <!-- <div flex="100" flex-gt-sm="50" layout="column"> -->
             <div>
                 <!--
@@ -192,8 +207,8 @@
                   -->
                 <fieldset class="standard" style="border-top: 0">
                      <!-- <legend>Using &lt;md-checkbox&gt; with &lt;ng-checked&gt; </legend> -->
-                    <div layout="row" layout-wrap flex>
-                        <div flex="25" ng-repeat="item in items">
+                    <div layout="row" layout-xs="column" layout-sm="column" layout-wrap flex>
+                        <div flex="25" flex-xs="90" width-sm="70" ng-repeat="item in items">
                             <md-card>
                                 <!-- <md-card-header>
                                     <md-card-avatar>
@@ -221,15 +236,15 @@
             </div>
         </div>
 
-        <div flex="100">
+        <!-- <div flex="100">
             <h2 class="md-title">Selected Items</h2>
             <code style="display: block; padding: 8px;">{{selectedInterests | json}}</code>
-        </div>
+        </div> -->
     </div>
 
     <!-- </div> -->
 
-    <section layout="row" layout-sm="column" layout-align="end center" layout-wrap>
+    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
             <div class="label"></div>
             <md-button class="md-raised md-primary" style="background-color: #DB515B; font-weight: bold" ng-click="addInterests()">SHOW EVENTS</md-button>
             
