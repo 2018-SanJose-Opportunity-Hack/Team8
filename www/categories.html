@@ -17,161 +17,322 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/checkbox.css" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript" src="js/app.js"></script>
 </head>
 
-<body ng-init="fetchSession()" ng-controller="index">
+<body ng-controller="index" ng-init="fetchSession()">
+    <!-- Main navigation -->
+    <nav class="navbar navbar-expand-md navbar-dark">
+        <div class="container">
 
-       <!-- Main navigation -->
-       <nav class="navbar navbar-expand-md navbar-dark">
-            <div class="container">
-    
-                <!-- Company name shown on mobile -->
-                <a class="navbar-brand" href="#">Company
-                    <span>Name</span>
-                </a>
-    
-                <!-- Mobile menu toggle -->
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-    
-                <!-- Main navigation items -->
-                <div class="collapse navbar-collapse" id="mainNavbar">
-                    <ul class="navbar-nav mr-auto justify-content-end">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="index.html">Events
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-    
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Reservations</a>
-                        </li>
-    
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Donation</a>
-                        </li>
-                    </ul>
-    
-                </div>
-    
+            <!-- Company name shown on mobile -->
+            <a class="navbar-brand" href="#">City of
+                <span>San Jose</span>
+            </a>
+
+            <!-- Mobile menu toggle -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Main navigation items -->
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav mr-auto justify-content-end">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">Events
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Reservations</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Donation</a>
+                    </li>
+                </ul>
+
             </div>
-        </nav>
+
+        </div>
+    </nav>
+
+
+    <!-- <md-content class="md-padding" layout-xs="column" layout="row">
+        <div flex-xs flex-gt-xs="50" layout="column">
+            <md-card>
+                <img src="./img/img3.jpeg" class="md-card-image" alt="Washed Out">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Action buttons</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <p>
+                        The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest
+                        Greene's musical language: feel it. It's a simple request, as well...
+                    </p>
+                    <p>
+                        The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest
+                        Greene's musical language: feel it. It's a simple request, as well...
+                    </p>
+                    <p>
+                        The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest
+                        Greene's musical language: feel it. It's a simple request, as well...
+                    </p>
+                </md-card-content>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button>Action 1</md-button>
+                    <md-button>Action 2</md-button>
+                </md-card-actions>
+            </md-card>
+            <md-card>
+                <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Vertical action buttons</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <p>
+                        The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest
+                        Greene's musical language: feel it. It's a simple request, as well...
+                    </p>
+                </md-card-content>
+                <md-card-actions layout="column" layout-align="start">
+                    <md-button>Action 1</md-button>
+                    <md-button>Action 2</md-button>
+                </md-card-actions>
+            </md-card>
+        </div>
+        <div flex-xs flex-gt-xs="50" layout="column">
+            <md-card>
+                <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Icon action buttons</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <p>
+                        The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest
+                        Greene's musical language: feel it. It's a simple request, as well...
+                    </p>
+                </md-card-content>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button class="md-icon-button" aria-label="Favorite">
+                        <md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="Settings">
+                        <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="Share">
+                        <md-icon md-svg-icon="img/icons/share-arrow.svg"></md-icon>
+                    </md-button>
+                </md-card-actions>
+            </md-card>
+            <md-card>
+                <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button class="md-icon-button" aria-label="Favorite">
+                        <md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="Settings">
+                        <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="Share">
+                        <md-icon md-svg-icon="img/icons/share-arrow.svg"></md-icon>
+                    </md-button>
+                </md-card-actions>
+            </md-card>
+
+            <md-card>
+                <md-card-header>
+                    <md-card-avatar>
+                        <img src="img/logo.svg" />
+                    </md-card-avatar>
+                    <md-card-header-text>
+                        <span class="md-title">AngularJS</span>
+                        <span class="md-subhead">Material</span>
+                    </md-card-header-text>
+                </md-card-header>
+                <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Card header</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <p>
+                        The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest
+                        Greene's musical language: feel it. It's a simple request, as well...
+                    </p>
+                </md-card-content>
+            </md-card>
+
+        </div>
+    </md-content> -->
 
 
 
-
-
-
-
-        <!-- Footer -->
-    <footer class="footer">
-            <div class="footer-lists">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm">
-                            <ul>
-                                <li>
-                                    <h4>Proin accumsan</h4>
-                                </li>
-                                <li>
-                                    <a href="#">Rutrum nulla a ultrices</a>
-                                </li>
-                                <li>
-                                    <a href="#">Blandit elementum</a>
-                                </li>
-                                <li>
-                                    <a href="#">Proin placerat accumsan</a>
-                                </li>
-                                <li>
-                                    <a href="#">Morbi hendrerit libero </a>
-                                </li>
-                                <li>
-                                    <a href="#">Curabitur sit amet tellus</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-sm">
-                            <ul>
-                                <li>
-                                    <h4>Condimentum</h4>
-                                </li>
-                                <li>
-                                    <a href="#">Curabitur sit amet tellus</a>
-                                </li>
-                                <li>
-                                    <a href="#">Morbi hendrerit libero </a>
-                                </li>
-                                <li>
-                                    <a href="#">Proin placerat accumsan</a>
-                                </li>
-                                <li>
-                                    <a href="#">Rutrum nulla a ultrices</a>
-                                </li>
-                                <li>
-                                    <a href="#">Cras dictum</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-sm">
-                            <ul>
-                                <li>
-                                    <h4>Suspendisse</h4>
-                                </li>
-                                <li>
-                                    <a href="#">Morbi hendrerit libero </a>
-                                </li>
-                                <li>
-                                    <a href="#">Proin placerat accumsan</a>
-                                </li>
-                                <li>
-                                    <a href="#">Rutrum nulla a ultrices</a>
-                                </li>
-                                <li>
-                                    <a href="#">Curabitur sit amet tellus</a>
-                                </li>
-                                <li>
-                                    <a href="#">Donec in ligula nisl.</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-sm">
-                            <h4>Suspendisse</h4>
-                            <p>Integer mattis blandit turpis, quis rutrum est. Maecenas quis arcu vel felis lobortis iaculis fringilla
-                                at ligula. Nunc dignissim porttitor dolor eget porta.</p>
-    
-                            <p class="social-icons">
-                                <a href="#">
-                                    <i class="fa fa-facebook fa-2x"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="fa fa-twitter fa-2x"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="fa fa-youtube fa-2x"></i>
-                                </a>
-                                <a href="#">
-                                    <i class="fa fa-instagram fa-2x"></i>
-                                </a>
-                            </p>
+    <!-- <div ng-controller="AppCtrl" class="md-padding" ng-cloak style="min-height:270px"> -->
+    <div layout="row" layout-wrap class="md-padding" ng-cloak style="min-height:270px">
+        <h2>Select your interests</h2>
+        <br/>
+        <h4>Choose at least three interests for you and your kids, parents for better experience</h4>
+        <!-- <div flex="100" flex-gt-sm="50" layout="column"> -->
+            <div>
+                <!--
+                    In IE, we cannot apply flex directly to <fieldset>
+                    @see https://github.com/philipwalton/flexbugs#9-some-html-elements-cant-be-flex-containers
+                  -->
+                <fieldset class="standard" style="border-top: 0">
+                     <!-- <legend>Using &lt;md-checkbox&gt; with &lt;ng-checked&gt; </legend> -->
+                    <div layout="row" layout-wrap flex>
+                        <div flex="25" ng-repeat="item in items">
+                            <md-card>
+                                <!-- <md-card-header>
+                                    <md-card-avatar>
+                                        <img src="img/logo.svg" />
+                                    </md-card-avatar>
+                                    <md-card-header-text>
+                                        <span class="md-title">AngularJS</span>
+                                        <span class="md-subhead">Material</span>
+                                    </md-card-header-text>
+                                </md-card-header> -->
+                                <img ng-src="{{item.img}}" class="md-card-image" alt="Washed Out">
+                                
+                                <md-checkbox  style="margin-left: 10px; margin-bottom: 0px" ng-checked="exists(item, selectedInterests)" ng-click="toggle(item, selectedInterests)">
+                                    <md-card-title>
+                                            <md-card-title-text>
+                                                <span class="md-headline">{{ item.category }}</span>
+                                            </md-card-title-text>
+                                    </md-card-title>
+                                    <!-- <span ng-if="exists(item, selected)">selected</span> -->
+                                </md-checkbox>
+                            </md-card>
                         </div>
                     </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div flex="100">
+            <h2 class="md-title">Selected Items</h2>
+            <code style="display: block; padding: 8px;">{{selectedInterests | json}}</code>
+        </div>
+    </div>
+
+    <!-- </div> -->
+
+    <section layout="row" layout-sm="column" layout-align="end center" layout-wrap>
+            <div class="label"></div>
+            <md-button class="md-raised md-primary" style="background-color: #DB515B; font-weight: bold" ng-click="addInterests()">SHOW EVENTS</md-button>
+            
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-lists">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        <ul>
+                            <li>
+                                <h4>Proin accumsan</h4>
+                            </li>
+                            <li>
+                                <a href="#">Rutrum nulla a ultrices</a>
+                            </li>
+                            <li>
+                                <a href="#">Blandit elementum</a>
+                            </li>
+                            <li>
+                                <a href="#">Proin placerat accumsan</a>
+                            </li>
+                            <li>
+                                <a href="#">Morbi hendrerit libero </a>
+                            </li>
+                            <li>
+                                <a href="#">Curabitur sit amet tellus</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm">
+                        <ul>
+                            <li>
+                                <h4>Condimentum</h4>
+                            </li>
+                            <li>
+                                <a href="#">Curabitur sit amet tellus</a>
+                            </li>
+                            <li>
+                                <a href="#">Morbi hendrerit libero </a>
+                            </li>
+                            <li>
+                                <a href="#">Proin placerat accumsan</a>
+                            </li>
+                            <li>
+                                <a href="#">Rutrum nulla a ultrices</a>
+                            </li>
+                            <li>
+                                <a href="#">Cras dictum</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm">
+                        <ul>
+                            <li>
+                                <h4>Suspendisse</h4>
+                            </li>
+                            <li>
+                                <a href="#">Morbi hendrerit libero </a>
+                            </li>
+                            <li>
+                                <a href="#">Proin placerat accumsan</a>
+                            </li>
+                            <li>
+                                <a href="#">Rutrum nulla a ultrices</a>
+                            </li>
+                            <li>
+                                <a href="#">Curabitur sit amet tellus</a>
+                            </li>
+                            <li>
+                                <a href="#">Donec in ligula nisl.</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm">
+                        <h4>Suspendisse</h4>
+                        <p>Integer mattis blandit turpis, quis rutrum est. Maecenas quis arcu vel felis lobortis iaculis fringilla
+                            at ligula. Nunc dignissim porttitor dolor eget porta.</p>
+
+                        <p class="social-icons">
+                            <a href="#">
+                                <i class="fa fa-facebook fa-2x"></i>
+                            </a>
+                            <a href="#">
+                                <i class="fa fa-twitter fa-2x"></i>
+                            </a>
+                            <a href="#">
+                                <i class="fa fa-youtube fa-2x"></i>
+                            </a>
+                            <a href="#">
+                                <i class="fa fa-instagram fa-2x"></i>
+                            </a>
+                        </p>
+                    </div>
                 </div>
-            </div>
-    
-    
-            <div class="footer-bottom">
-                <p class="text-center">Free Bootstrap Template by
-                    <a href="https://zypopwebtemplates.com/">ZyPop</a>.</p>
-                <p class="text-center">
-                    <a href="#">Back to top</a>
-                </p>
-            </div>
-    
-        </footer>
+            <!-- </div> -->
+        </div>
+
+    </footer>
+
+
 
     <!-- Bootcamp JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

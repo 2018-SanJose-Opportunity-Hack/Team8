@@ -210,6 +210,59 @@ app.controller('index', ['$scope', '$http', '$window', '$mdDialog', '$mdToast', 
         });
     };
 
+
+    // Categories
+    //$scope.items = [{"category":"sports", "img":"./img/img3.jpeg"}, {"category":"dance", "img":"./img/img3.jpeg"}, {"category":"arts", "img":"./img/img3.jpeg"}];
+    $scope.items = []
+    $http.get('data/categories.json').then(function (response) {
+        console.log('DATA: ' + JSON.stringify(response.data[0]));
+        $scope.items = response.data;
+    }, function (err) {
+        console.log("Error getting data from the categories JSON file.");
+    });  
+    $scope.selectedInterests = [];
+
+    $scope.toggle = function (item, list) {
+    var idx = list.indexOf(item);
+    if (idx > -1) {
+        list.splice(idx, 1);
+    }
+    else {
+        list.push(item);
+    }
+    };
+
+    $scope.exists = function (item, list) {
+    return list.indexOf(item) > -1;
+    };
+
+    $scope.addInterests = function () {
+        console.log('Add interests called.');
+        reqJson = {
+            "userId": $scope.loginEmail,
+            "interests": $scope.selected
+        };
+        $scope.loginLoading = true;
+        $http.post('login', reqJson, { headers: { 'Content-Type': 'application/json' } }).then(function (response) {
+            if (response.data.error) {
+                console.log('Error: ' + response.data.error);
+                $scope.sessionUser = undefined;
+                showToast(response.data.error);
+                $scope.loginLoading = false;
+            } else {
+                console.log('Login Successful ');
+                $scope.sessionUser = response.data;
+                $scope.loginLoading = false;
+                showToast("Login SuccessFul! Welcome");
+                $mdDialog.hide();
+            }
+        }, function (err) {
+            console.log("Error geting value from the Login API.");
+            $scope.sessionUser = undefined;
+            showToast("Error Calling API.");
+            $scope.loginLoading = false;
+        });
+    };
     $scope.showDetails = function (event) {
         console.log('showing details for event: ' + JSON.stringify(event));
         $scope.selectedEvent = event;
